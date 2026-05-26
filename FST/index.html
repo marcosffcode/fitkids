@@ -49,8 +49,11 @@
               href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap">
     </noscript>
 
-    <!-- PHOSPHOR ICONS: defer elimina o bloqueio de render (~400KB) -->
-    <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- ÍCONES: SVG inline — zero dependência externa, zero CSS não usado -->
+    <style>
+        .icon { display:inline-block; vertical-align:middle; flex-shrink:0; }
+        .icon svg { display:block; }
+    </style>
 
     <!-- CSS CRÍTICO INLINE (above-the-fold): renderiza o hero instantaneamente
          sem esperar nenhum arquivo externo -->
@@ -106,13 +109,13 @@
         }
         .btn-cta:hover { background-color: #1DA851; }
 
-        /* Efeito de pulso verde */
+        /* Efeito de pulso verde: outline é composto pelo browser (sem repaint = sem aviso PageSpeed) */
         @keyframes pulse-green {
-            0%   { box-shadow: 0 0 0 0 rgba(37,211,102,.7); }
-            70%  { box-shadow: 0 0 0 15px rgba(37,211,102,0); }
-            100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+            0%   { outline: 0px solid rgba(37,211,102,.8);  outline-offset: 0px; }
+            70%  { outline: 3px solid rgba(37,211,102,0);   outline-offset: 9px; }
+            100% { outline: 0px solid rgba(37,211,102,0);   outline-offset: 0px; }
         }
-        .btn-pulse { animation: pulse-green 2s infinite; }
+        .btn-pulse { animation: pulse-green 2s infinite; will-change: outline-offset; }
 
         /* Imagem hero */
         .hero-img {
@@ -555,9 +558,9 @@
             </h2>
 
             <ul class="hero-checklist">
-                <li><i class="ph-fill ph-check-circle text-brand-green" style="font-size:1.5rem"></i> Pronta em minutos</li>
-                <li><i class="ph-fill ph-check-circle text-brand-green" style="font-size:1.5rem"></i> O que tem em casa</li>
-                <li><i class="ph-fill ph-check-circle text-brand-green" style="font-size:1.5rem"></i> Imprima ou use no celular</li>
+                <li><span class="icon text-brand-green" style="width:1.5rem;height:1.5rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span> Pronta em minutos</li>
+                <li><span class="icon text-brand-green" style="width:1.5rem;height:1.5rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span> O que tem em casa</li>
+                <li><span class="icon text-brand-green" style="width:1.5rem;height:1.5rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span> Imprima ou use no celular</li>
             </ul>
 
             <img src="https://ik.imagekit.io/alvoecom/FST/96ab9379-7665-4e3f-96da-449e90a31141-Photoroom%20(1)%20(1).webp"
@@ -571,7 +574,7 @@
                class="btn-cta btn-pulse mt-8 w-full"
                style="max-width:28rem"
                onclick="fbq('track','InitiateCheckout')">
-                <i class="ph-bold ph-shopping-cart" style="font-size:1.5rem"></i>
+                <span class="icon" style="width:1.5rem;height:1.5rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M222.14,58.87A8,8,0,0,0,216,56H54.68L49.79,29.14A16,16,0,0,0,34.05,16H16a8,8,0,0,0,0,16H34.05l32.51,168.86A24,24,0,1,0,88,216a23.84,23.84,0,0,0-1.6-8.57l.12,0H168a16,16,0,0,0,15.72-13.14l12.12-66.86L222,96a8,8,0,0,0,.14-10.63ZM88,208a8,8,0,1,1-8-8A8,8,0,0,1,88,208Zm80,0a8,8,0,1,1-8-8A8,8,0,0,1,168,208Zm5.59-56H83.5L65.62,72H208Z"/></svg></span>
                 QUERO O KIT POR APENAS R$ 17
             </a>
 
@@ -690,7 +693,7 @@
                    class="btn-cta btn-pulse"
                    style="max-width:28rem;width:100%"
                    onclick="fbq('track','InitiateCheckout')">
-                    <i class="ph-bold ph-shopping-cart" style="font-size:1.5rem"></i>
+                    <span class="icon" style="width:1.5rem;height:1.5rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M222.14,58.87A8,8,0,0,0,216,56H54.68L49.79,29.14A16,16,0,0,0,34.05,16H16a8,8,0,0,0,0,16H34.05l32.51,168.86A24,24,0,1,0,88,216a23.84,23.84,0,0,0-1.6-8.57l.12,0H168a16,16,0,0,0,15.72-13.14l12.12-66.86L222,96a8,8,0,0,0,.14-10.63ZM88,208a8,8,0,1,1-8-8A8,8,0,0,1,88,208Zm80,0a8,8,0,1,1-8-8A8,8,0,0,1,168,208Zm5.59-56H83.5L65.62,72H208Z"/></svg></span>
                     QUERO O KIT POR APENAS R$ 17
                 </a>
             </div>
@@ -762,7 +765,7 @@
             <div class="px-2">
                 <div class="step-card">
                     <div class="step-badge">1</div>
-                    <div class="text-brand-blue shrink-0"><i class="ph ph-envelope-simple" style="font-size:3rem"></i></div>
+                    <div class="text-brand-blue shrink-0"><span class="icon" style="width:3rem;height:3rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"><rect x="24" y="56" width="208" height="160" rx="8"/><path d="M24,88l104,72L232,88"/></svg></span></div>
                     <div>
                         <h3 class="font-poppins text-2xl font-bold text-color-1a mb-2">Faça o download</h3>
                         <p class="text-gray-600 leading-relaxed" style="font-size:1.0625rem">Após o pagamento, você recebe imediatamente um e-mail com o acesso a todos os materiais para baixar.</p>
@@ -771,7 +774,7 @@
 
                 <div class="step-card">
                     <div class="step-badge">2</div>
-                    <div class="text-brand-blue shrink-0"><i class="ph ph-printer" style="font-size:3rem"></i></div>
+                    <div class="text-brand-blue shrink-0"><span class="icon" style="width:3rem;height:3rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"><polyline points="64 80 64 40 192 40 192 80"/><rect x="16" y="80" width="224" height="120" rx="8"/><polyline points="64 200 64 152 192 152 192 200"/><line x1="172" y1="112" x2="172" y2="112"/></svg></span></div>
                     <div>
                         <h3 class="font-poppins text-2xl font-bold text-color-1a mb-2">Imprima as atividades</h3>
                         <p class="text-gray-600 leading-relaxed" style="font-size:1.0625rem">Imprima facilmente em casa ou na gráfica em papel A4. Você também pode aplicar muitas atividades visualizando direto no celular.</p>
@@ -780,7 +783,7 @@
 
                 <div class="step-card" style="margin-bottom:0">
                     <div class="step-badge">3</div>
-                    <div class="text-brand-blue shrink-0"><i class="ph ph-pencil-simple" style="font-size:3rem"></i></div>
+                    <div class="text-brand-blue shrink-0"><span class="icon" style="width:3rem;height:3rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"><path d="M96,216H48a8,8,0,0,1-8-8V160a8,8,0,0,1,2.34-5.66l120-120a8,8,0,0,1,11.32,0l48,48a8,8,0,0,1,0,11.32Z"/><line x1="136" y1="64" x2="192" y2="120"/></svg></span></div>
                     <div>
                         <h3 class="font-poppins text-2xl font-bold text-color-1a mb-2">Comece a praticar</h3>
                         <p class="text-gray-600 leading-relaxed" style="font-size:1.0625rem">Pronto! Sugerimos de 15 a 20 minutos por dia de diversão para gastar a energia e estimular a criatividade do pequeno.</p>
@@ -793,7 +796,7 @@
                    class="btn-cta btn-pulse"
                    style="max-width:28rem;width:100%"
                    onclick="fbq('track','InitiateCheckout')">
-                    <i class="ph-bold ph-shopping-cart" style="font-size:1.5rem"></i>
+                    <span class="icon" style="width:1.5rem;height:1.5rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M222.14,58.87A8,8,0,0,0,216,56H54.68L49.79,29.14A16,16,0,0,0,34.05,16H16a8,8,0,0,0,0,16H34.05l32.51,168.86A24,24,0,1,0,88,216a23.84,23.84,0,0,0-1.6-8.57l.12,0H168a16,16,0,0,0,15.72-13.14l12.12-66.86L222,96a8,8,0,0,0,.14-10.63ZM88,208a8,8,0,1,1-8-8A8,8,0,0,1,88,208Zm80,0a8,8,0,1,1-8-8A8,8,0,0,1,168,208Zm5.59-56H83.5L65.62,72H208Z"/></svg></span>
                     QUERO O KIT POR APENAS R$ 17
                 </a>
             </div>
@@ -913,7 +916,7 @@
                    class="btn-cta btn-pulse"
                    style="max-width:28rem;width:100%"
                    onclick="fbq('track','InitiateCheckout')">
-                    <i class="ph-bold ph-gift" style="font-size:1.5rem"></i>
+                    <span class="icon" style="width:1.5rem;height:1.5rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M216,72H180.92C181,70.54,181,69,181,67.5a37.5,37.5,0,0,0-75,0c0,1.54,0,3.06.08,4.5H72A16,16,0,0,0,56,88v32a16,16,0,0,0,16,16v72a16,16,0,0,0,16,16H168a16,16,0,0,0,16-16V136a16,16,0,0,0,16-16V88A16,16,0,0,0,216,72ZM143.5,67.5a21.5,21.5,0,0,1,43,0c0,1.6-.07,3.2-.24,4.5H143.82C143.66,70.7,143.5,69.1,143.5,67.5ZM106,67.5a21.5,21.5,0,0,1,43,0c0,1.6-.16,3.2-.41,4.5H105.66A47.71,47.71,0,0,1,106,67.5ZM120,208H88V136h32Zm0-88H72V88h48Zm48,88H136V136h32Zm16-88H136V88h48Zm32-16H168V88h48Z"/></svg></span>
                     QUERO O KIT + BÔNUS AGORA
                 </a>
             </div>
@@ -937,19 +940,19 @@
                 <div style="width:100%;text-align:left">
                     <ul class="space-y-4 text-lg font-medium text-gray-700">
                         <li class="flex items-start gap-3">
-                            <i class="ph-fill ph-check-circle text-brand-green shrink-0 mt-1" style="font-size:1.25rem"></i>
+                            <span class="icon text-brand-green shrink-0 mt-1" style="width:1.25rem;height:1.25rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span>
                             <span>Mães que trabalham em casa e não sabem como entreter os filhos.</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <i class="ph-fill ph-check-circle text-brand-green shrink-0 mt-1" style="font-size:1.25rem"></i>
+                            <span class="icon text-brand-green shrink-0 mt-1" style="width:1.25rem;height:1.25rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span>
                             <span>Pais sem tempo ou energia para inventar novas brincadeiras todo dia.</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <i class="ph-fill ph-check-circle text-brand-green shrink-0 mt-1" style="font-size:1.25rem"></i>
+                            <span class="icon text-brand-green shrink-0 mt-1" style="width:1.25rem;height:1.25rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span>
                             <span>Quem deseja tirar as crianças das telas sem brigas e estresse.</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <i class="ph-fill ph-check-circle text-brand-green shrink-0 mt-1" style="font-size:1.25rem"></i>
+                            <span class="icon text-brand-green shrink-0 mt-1" style="width:1.25rem;height:1.25rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span>
                             <span>Famílias que buscam criar memórias felizes neste mês de férias.</span>
                         </li>
                     </ul>
@@ -969,31 +972,31 @@
                 <div class="space-y-6">
                     <div class="preco-item">
                         <span class="font-bold text-gray-700 text-lg flex items-center gap-2">
-                            <i class="ph-fill ph-check-circle text-brand-green"></i> Kit +150 Atividades
+                            <span class="icon text-brand-green" style="width:1rem;height:1rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span> Kit +150 Atividades
                         </span>
                         <span class="text-red-500 line-through font-bold">R$ 97,00</span>
                     </div>
                     <div class="preco-item">
                         <span class="font-bold text-gray-700 text-lg flex items-center gap-2">
-                            <i class="ph-fill ph-check-circle text-brand-green"></i> Bônus: Cronograma Férias
+                            <span class="icon text-brand-green" style="width:1rem;height:1rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span> Bônus: Cronograma Férias
                         </span>
                         <span class="text-red-500 line-through font-bold">R$ 47,00</span>
                     </div>
                     <div class="preco-item">
                         <span class="font-bold text-gray-700 text-lg flex items-center gap-2">
-                            <i class="ph-fill ph-check-circle text-brand-green"></i> Bônus: Guia Mãe de Sucesso
+                            <span class="icon text-brand-green" style="width:1rem;height:1rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span> Bônus: Guia Mãe de Sucesso
                         </span>
                         <span class="text-red-500 line-through font-bold">R$ 47,00</span>
                     </div>
                     <div class="preco-item">
                         <span class="font-bold text-gray-700 text-lg flex items-center gap-2">
-                            <i class="ph-fill ph-check-circle text-brand-green"></i> Bônus: Combo Volta às Aulas
+                            <span class="icon text-brand-green" style="width:1rem;height:1rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span> Bônus: Combo Volta às Aulas
                         </span>
                         <span class="text-red-500 line-through font-bold">R$ 67,00</span>
                     </div>
                     <div class="preco-item" style="border-bottom:none;padding-bottom:0">
                         <span class="font-bold text-gray-700 text-lg flex items-center gap-2">
-                            <i class="ph-fill ph-check-circle text-brand-green"></i> Bônus: Sessão Pipoca
+                            <span class="icon text-brand-green" style="width:1rem;height:1rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span> Bônus: Sessão Pipoca
                         </span>
                         <span class="text-red-500 line-through font-bold">R$ 37,00</span>
                     </div>
@@ -1033,7 +1036,7 @@
                        class="btn-cta btn-pulse w-full mb-6"
                        style="font-size:1.5rem;padding:1.5rem"
                        onclick="fbq('track','InitiateCheckout')">
-                        <i class="ph-bold ph-shopping-cart" style="font-size:1.875rem"></i>
+                        <span class="icon" style="width:1.875rem;height:1.875rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M222.14,58.87A8,8,0,0,0,216,56H54.68L49.79,29.14A16,16,0,0,0,34.05,16H16a8,8,0,0,0,0,16H34.05l32.51,168.86A24,24,0,1,0,88,216a23.84,23.84,0,0,0-1.6-8.57l.12,0H168a16,16,0,0,0,15.72-13.14l12.12-66.86L222,96a8,8,0,0,0,.14-10.63ZM88,208a8,8,0,1,1-8-8A8,8,0,0,1,88,208Zm80,0a8,8,0,1,1-8-8A8,8,0,0,1,168,208Zm5.59-56H83.5L65.62,72H208Z"/></svg></span>
                         QUERO COMPRAR AGORA
                     </a>
                     <div class="w-full h-px bg-gray-300 mb-6"></div>
@@ -1057,20 +1060,20 @@
                     <h2 class="font-poppins text-2xl font-bold text-red-600 mb-6 border-b border-red-200 pb-2">Opção 1</h2>
                     <h3 class="font-bold text-gray-800 text-xl mb-4">Férias no Celular</h3>
                     <ul class="space-y-4 text-gray-700">
-                        <li class="flex items-start gap-2"><i class="ph-bold ph-arrow-right text-red-500 shrink-0 mt-1" style="font-size:1.25rem"></i> Ignorar essa página</li>
-                        <li class="flex items-start gap-2"><i class="ph-bold ph-arrow-right text-red-500 shrink-0 mt-1" style="font-size:1.25rem"></i> Continuar sofrendo para arrumar o que fazer</li>
-                        <li class="flex items-start gap-2"><i class="ph-bold ph-arrow-right text-red-500 shrink-0 mt-1" style="font-size:1.25rem"></i> Deixar seu filho dependente da tela</li>
-                        <li class="flex items-start gap-2"><i class="ph-bold ph-arrow-right text-red-500 shrink-0 mt-1" style="font-size:1.25rem"></i> Lidar com birras e agitação no fim do dia</li>
+                        <li class="flex items-start gap-2"><span class="icon text-red-500 shrink-0 mt-1" style="width:1.25rem;height:1.25rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></span> Ignorar essa página</li>
+                        <li class="flex items-start gap-2"><span class="icon text-red-500 shrink-0 mt-1" style="width:1.25rem;height:1.25rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></span> Continuar sofrendo para arrumar o que fazer</li>
+                        <li class="flex items-start gap-2"><span class="icon text-red-500 shrink-0 mt-1" style="width:1.25rem;height:1.25rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></span> Deixar seu filho dependente da tela</li>
+                        <li class="flex items-start gap-2"><span class="icon text-red-500 shrink-0 mt-1" style="width:1.25rem;height:1.25rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></span> Lidar com birras e agitação no fim do dia</li>
                     </ul>
                 </div>
                 <div class="opcao-boa md-scale-105">
                     <h2 class="font-poppins text-2xl font-bold text-brand-green mb-6 border-b border-green-200 pb-2">Opção 2</h2>
                     <h3 class="font-bold text-gray-800 text-xl mb-4">Férias Divertidas (Com o Kit)</h3>
                     <ul class="space-y-4 text-gray-700 font-medium">
-                        <li class="flex items-start gap-2"><i class="ph-fill ph-check-circle text-brand-green shrink-0 mt-1" style="font-size:1.25rem"></i> Baixar o material completo agora mesmo</li>
-                        <li class="flex items-start gap-2"><i class="ph-fill ph-check-circle text-brand-green shrink-0 mt-1" style="font-size:1.25rem"></i> Ter 30 dias de brincadeiras na palma da mão</li>
-                        <li class="flex items-start gap-2"><i class="ph-fill ph-check-circle text-brand-green shrink-0 mt-1" style="font-size:1.25rem"></i> Ver seu filho criativo, calmo e longe da tela</li>
-                        <li class="flex items-start gap-2"><i class="ph-fill ph-check-circle text-brand-green shrink-0 mt-1" style="font-size:1.25rem"></i> Trabalhar e descansar com paz na rotina</li>
+                        <li class="flex items-start gap-2"><span class="icon text-brand-green shrink-0 mt-1" style="width:1.25rem;height:1.25rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span> Baixar o material completo agora mesmo</li>
+                        <li class="flex items-start gap-2"><span class="icon text-brand-green shrink-0 mt-1" style="width:1.25rem;height:1.25rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span> Ter 30 dias de brincadeiras na palma da mão</li>
+                        <li class="flex items-start gap-2"><span class="icon text-brand-green shrink-0 mt-1" style="width:1.25rem;height:1.25rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span> Ver seu filho criativo, calmo e longe da tela</li>
+                        <li class="flex items-start gap-2"><span class="icon text-brand-green shrink-0 mt-1" style="width:1.25rem;height:1.25rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Z"/></svg></span> Trabalhar e descansar com paz na rotina</li>
                     </ul>
                 </div>
             </div>
@@ -1102,27 +1105,27 @@
             <h2 class="font-poppins text-3xl font-bold text-center mb-10">Perguntas <span class="text-brand-blue">Frequentes</span></h2>
             <div>
                 <details class="faq-item">
-                    <summary>Serve pra idade do meu filho?<span class="faq-caret"><i class="ph-bold ph-caret-down"></i></span></summary>
+                    <summary>Serve pra idade do meu filho?<span class="faq-caret"><span class="icon" style="width:1.25rem;height:1.25rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg></span></span></summary>
                     <div class="faq-answer">As atividades foram desenhadas para abranger desde crianças menores que estão desenvolvendo coordenação motora até as mais velhas, estimulando a criatividade e o raciocínio de forma lúdica e adaptável.</div>
                 </details>
                 <details class="faq-item">
-                    <summary>Posso usar em todos os dispositivos?<span class="faq-caret"><i class="ph-bold ph-caret-down"></i></span></summary>
+                    <summary>Posso usar em todos os dispositivos?<span class="faq-caret"><span class="icon" style="width:1.25rem;height:1.25rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg></span></span></summary>
                     <div class="faq-answer">Com certeza. Você pode baixar e visualizar o material no seu celular, tablet, computador ou notebook. É tudo entregue em um formato super leve e compatível com qualquer aparelho.</div>
                 </details>
                 <details class="faq-item">
-                    <summary>Preciso imprimir tudo?<span class="faq-caret"><i class="ph-bold ph-caret-down"></i></span></summary>
+                    <summary>Preciso imprimir tudo?<span class="faq-caret"><span class="icon" style="width:1.25rem;height:1.25rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg></span></span></summary>
                     <div class="faq-answer">Não! Muitas atividades são totalmente lúdicas, bastando você ou a criança lerem a instrução no celular e aplicarem na prática com objetos da casa. Mas se quiser colorir ou escrever, o formato é perfeito para impressão em folhas A4 comuns.</div>
                 </details>
                 <details class="faq-item">
-                    <summary>Preciso estar junto em todas as atividades?<span class="faq-caret"><i class="ph-bold ph-caret-down"></i></span></summary>
+                    <summary>Preciso estar junto em todas as atividades?<span class="faq-caret"><span class="icon" style="width:1.25rem;height:1.25rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg></span></span></summary>
                     <div class="faq-answer">Embora a interação familiar seja incrível, o material também estimula a "Autonomia Natural". Muitas brincadeiras permitem que, após você dar o direcionamento inicial, seu filho se divirta sozinho enquanto você trabalha ou descansa.</div>
                 </details>
                 <details class="faq-item">
-                    <summary>Serve pra crianças com autismo ou TDAH?<span class="faq-caret"><i class="ph-bold ph-caret-down"></i></span></summary>
+                    <summary>Serve pra crianças com autismo ou TDAH?<span class="faq-caret"><span class="icon" style="width:1.25rem;height:1.25rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg></span></span></summary>
                     <div class="faq-answer">Sim! As atividades trabalham texturas, repetições, foco e cores de forma lúdica, sendo super recomendadas para auxiliar no desenvolvimento neurodivergente, agindo de forma oposta aos estímulos excessivos e rápidos das telas.</div>
                 </details>
                 <details class="faq-item">
-                    <summary>Posso compartilhar com outro responsável ou escola?<span class="faq-caret"><i class="ph-bold ph-caret-down"></i></span></summary>
+                    <summary>Posso compartilhar com outro responsável ou escola?<span class="faq-caret"><span class="icon" style="width:1.25rem;height:1.25rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg></span></span></summary>
                     <div class="faq-answer">Sim. Como o arquivo é seu após a compra, você pode enviá-lo para os avós, cuidadores ou até imprimir páginas específicas para mandar para a escola do seu pequeno.</div>
                 </details>
             </div>
@@ -1152,7 +1155,7 @@
                    class="btn-cta btn-pulse w-full mb-6"
                    style="font-size:1.5rem;padding:1.5rem"
                    onclick="fbq('track','InitiateCheckout')">
-                    <i class="ph-bold ph-shopping-cart" style="font-size:1.875rem"></i>
+                    <span class="icon" style="width:1.875rem;height:1.875rem;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M222.14,58.87A8,8,0,0,0,216,56H54.68L49.79,29.14A16,16,0,0,0,34.05,16H16a8,8,0,0,0,0,16H34.05l32.51,168.86A24,24,0,1,0,88,216a23.84,23.84,0,0,0-1.6-8.57l.12,0H168a16,16,0,0,0,15.72-13.14l12.12-66.86L222,96a8,8,0,0,0,.14-10.63ZM88,208a8,8,0,1,1-8-8A8,8,0,0,1,88,208Zm80,0a8,8,0,1,1-8-8A8,8,0,0,1,168,208Zm5.59-56H83.5L65.62,72H208Z"/></svg></span>
                     QUERO SALVAR MINHAS FÉRIAS
                 </a>
                 <div class="w-full h-px bg-gray-300 mb-6"></div>
@@ -1184,7 +1187,7 @@
     <!-- POPUP DE PROVA SOCIAL -->
     <div id="purchase-popup">
         <div style="background:#DCFCE7;padding:.5rem;border-radius:9999px">
-            <i class="ph-bold ph-check" style="color:#16A34A;font-size:1.25rem"></i>
+            <span class="icon" style="width:1.25rem;height:1.25rem;color:#16A34A"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg></span>
         </div>
         <div>
             <p style="font-size:.875rem;font-weight:700;color:#1F2937;margin:0"><span id="buyer-name">Ana M.</span> comprou agora!</p>
