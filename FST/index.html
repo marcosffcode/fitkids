@@ -7,7 +7,7 @@
 
     <!-- ================================================
          META PIXEL — Cole seu Pixel ID abaixo
-         Substitua: SEU_PIXEL_ID_AQUI
+         Substitua: 1327107896185915
     ================================================ -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -18,12 +18,12 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'SEU_PIXEL_ID_AQUI');
+    fbq('init', '1327107896185915');
     fbq('track', 'PageView');
     </script>
     <noscript>
         <img height="1" width="1" style="display:none"
-             src="https://www.facebook.com/tr?id=SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1"/>
+             src="https://www.facebook.com/tr?id=1327107896185915&ev=PageView&noscript=1"/>
     </noscript>
     <!-- FIM META PIXEL -->
 
@@ -1195,12 +1195,17 @@
         </div>
     </div>
 
-    <!-- ================================================
-         UTMIFY — Cole seu script abaixo (substitua o src)
-         Manter "defer" para não bloquear o carregamento
-    ================================================ -->
-    <script defer src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-            data-utmify-prevent-subids></script>
+
+    <!--  UTMIFY -->
+    
+ <script
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-xcod-sck
+  data-utmify-prevent-subids
+  async
+  defer
+></script>
+    
     <!-- FIM UTMIFY -->
 
     <!-- SCRIPTS: executam depois que a página já renderizou -->
@@ -1218,7 +1223,7 @@
             popup.classList.add('show');
             setTimeout(() => popup.classList.remove('show'), 6000);
         }
-        setTimeout(() => { showPopup(); setInterval(showPopup, 20000); }, 3000);
+        setTimeout(() => { showPopup(); setInterval(showPopup, 45000); }, 12000);
 
         // ANIMAÇÕES REVEAL AO SCROLLAR
         // Usando requestIdleCallback para não bloquear a thread principal
