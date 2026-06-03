@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Análise de Biotipo Linfático</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- VTURB PRELOADS -->
+    <script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
+    <link rel="preload" href="https://scripts.converteai.net/8517e3d1-7796-43ee-bf69-c35b2f2f45b1/players/6a20a529e90df3848a273adf/v4/player.js" as="script">
+    <link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script">
+    <link rel="preload" href="https://cdn.converteai.net/8517e3d1-7796-43ee-bf69-c35b2f2f45b1/6a20a4f1c681d550d42356f7/main.m3u8" as="fetch">
+    <link rel="dns-prefetch" href="https://cdn.converteai.net">
+    <link rel="dns-prefetch" href="https://scripts.converteai.net">
+    <link rel="dns-prefetch" href="https://images.converteai.net">
+    <link rel="dns-prefetch" href="https://license.vturb.com">
+
+
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1015932644349701');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+
+<script
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-xcod-sck
+  data-utmify-prevent-subids
+  async
+  defer
+></script>
+
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        medicalbg: '#f8fafc', /* slate-50 */
+                        clinicalblue: '#2563eb', /* blue-600 */
+                        clinicalhover: '#1d4ed8', /* blue-700 */
+                        alertred: '#ef4444', /* red-500 */
+                        textmain: '#1e293b', /* slate-800 */
+                        textmuted: '#64748b', /* slate-500 */
+                        fbblue: '#385898',
+                        fbgray: '#606770',
+                        fbgbg: '#f0f2f5'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'slide-up': 'slideUp 0.5s ease-out forwards',
+                        'pulse-border': 'pulseBorder 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        pulseBorder: {
+                            '0%, 100%': { borderColor: 'rgba(239, 68, 68, 0.2)' },
+                            '50%': { borderColor: 'rgba(239, 68, 68, 1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+        
+        .clinical-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        }
+
+        .btn-option {
+            transition: all 0.2s ease;
+        }
+        
+        .btn-option:active {
+            transform: scale(0.98);
+            background-color: #eff6ff;
+            border-color: #3b82f6;
+        }
+
+        .progress-bar-fill {
+            transition: width 0.4s ease-out;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .spinner {
+            border: 4px solid #e2e8f0;
+            border-left-color: #2563eb;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden-section {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col items-center">
+
+    <main id="start-screen" class="flex-1 w-full max-w-md px-5 py-10 flex flex-col justify-center items-center text-center animate-fade-in relative z-10 min-h-screen">
+        
+        <div class="mb-6 bg-white p-3 rounded-full shadow-sm border border-slate-100 flex items-center justify-center">
+            <svg class="w-8 h-8 text-clinicalblue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+        </div>
+
+        <div class="mb-4 inline-block px-4 py-1.5 rounded-full border border-blue-200 bg-blue-50 text-clinicalblue text-xs font-bold tracking-wide">
+            DIAGNÓSTICO VIRTUAL GRATUITO
+        </div>
+        
+        <h1 class="text-3xl md:text-4xl font-extrabold mb-4 leading-tight text-textmain">
+            Descubra o motivo do <span class="text-alertred">Volume Teimoso</span> nas suas pernas
+        </h1>
+        
+        <p class="text-textmuted mb-8 text-sm md:text-base leading-relaxed font-medium">
+            Responda este breve teste sigiloso para descobrir se suas pernas estão sofrendo com um bloqueio biológico e veja como devolver a leveza e a proporção do seu corpo em casa.
+        </p>
+        
+        <div class="clinical-card p-5 rounded-2xl w-full mb-8 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-clinicalblue"></div>
+            <div class="flex items-start gap-3 text-left">
+                <svg class="w-5 h-5 text-clinicalblue shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <p class="text-sm text-slate-600 font-medium leading-relaxed">Este teste revelará a causa exata pela qual dietas comuns e exercícios parecem não funcionar da cintura para baixo.</p>
+            </div>
+        </div>
+
+        <button onclick="startQuiz()" class="w-full bg-clinicalblue hover:bg-clinicalhover text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_rgba(37,99,235,0.2)] transition-all text-lg">
+            INICIAR ANÁLISE AGORA
+        </button>
+        
+        <p class="text-xs text-slate-400 mt-6 flex items-center justify-center gap-1.5 font-medium">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+            Seus dados são 100% seguros e sigilosos
+        </p>
+    </main>
+
+    <main id="quiz-screen" class="hidden-section flex-1 w-full max-w-md px-5 py-8 flex flex-col min-h-screen">
+        <div class="w-full mb-8 clinical-card p-4 rounded-2xl">
+            <div class="flex justify-between text-xs text-slate-500 font-bold mb-3 uppercase tracking-wide">
+                <span>Progresso da Análise</span>
+                <span id="progress-text" class="text-clinicalblue">0%</span>
+            </div>
+            <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                <div id="progress-bar" class="h-full bg-clinicalblue progress-bar-fill w-0"></div>
+            </div>
+        </div>
+        <div id="question-container" class="flex-1 flex flex-col justify-center animate-fade-in">
+        </div>
+    </main>
+
+    <main id="loading-screen" class="hidden-section flex-1 w-full max-w-md px-5 py-10 flex flex-col justify-center items-center text-center min-h-screen">
+        <div class="spinner mb-8"></div>
+        <h2 class="text-2xl font-bold mb-4 text-textmain">Diagnosticando perfil...</h2>
+        <div class="clinical-card p-5 rounded-xl w-full border-l-4 border-l-clinicalblue">
+            <p id="loading-text" class="text-slate-700 font-semibold h-12 flex items-center justify-center transition-opacity duration-300">
+                Processando suas respostas...
+            </p>
+        </div>
+    </main>
+
+    <main id="vsl-screen" class="hidden-section w-full min-h-screen pb-20 bg-white">
+        <!-- Barra de Alerta Clínica -->
+        <header class="w-full bg-red-50 py-2.5 text-center border-b border-red-200">
+            <p class="text-xs md:text-sm font-bold text-alertred tracking-wide uppercase flex items-center justify-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                Resultado do Exame Concluído
+            </p>
+        </header>
+
+        <div class="max-w-3xl mx-auto px-4 mt-8">
+            <div class="text-center mb-6 animate-slide-up">
+                <h1 class="text-2xl md:text-3xl font-extrabold leading-tight mb-4 text-slate-900">
+                    O seu teste apontou <span class="text-alertred border-b-2 border-red-200 pb-0.5">Retenção Severa</span>. Assista ao vídeo e veja como tratar o bloqueio em 14 dias.
+                </h1>
+                <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
+                    O vídeo abaixo explica o porquê dietas normais não soltam o seu volume, e o que você precisa fazer na sua cozinha amanhã cedo.
+                </p>
+            </div>
+
+            <!-- CONTAINER VTURB -->
+            <div id="vturb-container" class="w-full mt-6 flex items-center justify-center relative z-20">
+                <!-- O player do VTurb será injetado aqui via JavaScript apenas na hora certa -->
+            </div>
+
+            <div class="mt-4 text-center">
+                <p class="text-xs text-slate-500 font-medium flex items-center justify-center gap-1.5">
+                    <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    Vídeo com áudio ativado
+                </p>
+            </div>
+            
+            <!-- SESSÃO DE COMENTÁRIOS FACEBOOK -->
+            <div class="mt-12 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm font-sans text-[14px]">
+                <div class="px-4 py-3 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                    <span class="font-semibold text-textmain">14 comentários</span>
+                    <div class="flex items-center text-slate-600 cursor-pointer hover:bg-slate-200 px-2 py-1 rounded">
+                        <span class="font-semibold mr-1">Classificar por</span>
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </div>
+                </div>
+
+                <div class="p-4 space-y-4">
+                    
+                    <!-- Comment 1 -->
+                    <div class="flex gap-2">
+                        <img src="https://ik.imagekit.io/alvoecom/1719582228332.webp" class="w-10 h-10 rounded-full object-cover shrink-0" alt="Profile">
+                        <div>
+                            <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
+                                <span class="font-bold text-fbblue cursor-pointer hover:underline">Maria José Fernandes</span>
+                                <p class="text-[#050505] mt-0.5 leading-snug">Gente, eu comecei ontem de manhã e já senti minhas pernas menos pesadas no final do dia. Até chorei no banho... a sensação de cimento sumiu. Obrigada Dra Helena!</p>
+                            </div>
+                            <div class="text-xs text-fbgray mt-1 font-semibold flex gap-3 ml-2">
+                                <span class="cursor-pointer hover:underline">Curtir</span>
+                                <span class="cursor-pointer hover:underline">Responder</span>
+                                <span class="font-normal text-slate-400">45 min</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comment 2 -->
+                    <div class="flex gap-2">
+                        <img src="https://ik.imagekit.io/alvoecom/1755733624206.webp" class="w-10 h-10 rounded-full object-cover shrink-0" alt="Profile">
+                        <div>
+                            <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
+                                <span class="font-bold text-fbblue cursor-pointer hover:underline">Luciana Teixeira</span>
+                                <p class="text-[#050505] mt-0.5 leading-snug">Eu ia fazer cirurgia de varizes achando que a dor era isso. Assisti o vídeo até o final e cancelei. Fiz a receita hoje cedo, é super fácil e os ingredientes eu já tinha em casa.</p>
+                            </div>
+                            <div class="flex items-center gap-1 mt-1 -mb-1 ml-2">
+                                <div class="bg-white rounded-full p-0.5 shadow-sm border border-slate-100 flex items-center">
+                                    <span class="text-sm">❤️👍</span>
+                                </div>
+                                <span class="text-xs text-slate-500">12</span>
+                            </div>
+                            <div class="text-xs text-fbgray mt-1 font-semibold flex gap-3 ml-2">
+                                <span class="cursor-pointer hover:underline">Curtir</span>
+                                <span class="cursor-pointer hover:underline">Responder</span>
+                                <span class="font-normal text-slate-400">1 h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comment 3 -->
+                    <div class="flex gap-2">
+                        <img src="https://ik.imagekit.io/alvoecom/1754151524929.webp" class="w-10 h-10 rounded-full object-cover shrink-0" alt="Profile">
+                        <div>
+                            <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
+                                <span class="font-bold text-fbblue cursor-pointer hover:underline">Carla Mendonça</span>
+                                <p class="text-[#050505] mt-0.5 leading-snug">Pra quem tá na dúvida, funciona sim. Faz 12 dias que tô tomando em jejum e já consegui entrar numa calça jeans que tava guardada no guarda-roupa há 4 anos. A pele não tá mais tão dura.</p>
+                            </div>
+                            <div class="text-xs text-fbgray mt-1 font-semibold flex gap-3 ml-2">
+                                <span class="cursor-pointer hover:underline">Curtir</span>
+                                <span class="cursor-pointer hover:underline">Responder</span>
+                                <span class="font-normal text-slate-400">2 h</span>
+                            </div>
+                            
+                            <!-- Reply -->
+                            <div class="flex gap-2 mt-2 ml-4">
+                                <img src="https://ik.imagekit.io/alvoecom/1727571081629.webp" class="w-8 h-8 rounded-full object-cover shrink-0" alt="Profile">
+                                <div>
+                                    <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
+                                        <span class="font-bold text-fbblue cursor-pointer hover:underline">Sonia Ribeiro</span>
+                                        <p class="text-[#050505] mt-0.5 leading-snug">Carla, e a dor diminuiu? Eu sofro demais pra dormir.</p>
+                                    </div>
+                                    <div class="text-xs text-fbgray mt-1 font-semibold flex gap-3 ml-2">
+                                        <span class="cursor-pointer hover:underline">Curtir</span>
+                                        <span class="cursor-pointer hover:underline">Responder</span>
+                                        <span class="font-normal text-slate-400">1 h</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comment 4 -->
+                    <div class="flex gap-2">
+                        <img src="https://ik.imagekit.io/alvoecom/1728566696715.webp" class="w-10 h-10 rounded-full object-cover shrink-0" alt="Profile">
+                        <div>
+                            <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
+                                <span class="font-bold text-fbblue cursor-pointer hover:underline">Renata Alves</span>
+                                <p class="text-[#050505] mt-0.5 leading-snug">Nossa, aquele pedaço da panela suja de gordura no vídeo abriu minha mente. Eu me matava no jump e no spinning e só ferrava meu joelho, a perna nunca afinava. Agora tudo faz sentido.</p>
+                            </div>
+                            <div class="text-xs text-fbgray mt-1 font-semibold flex gap-3 ml-2">
+                                <span class="cursor-pointer hover:underline">Curtir</span>
+                                <span class="cursor-pointer hover:underline">Responder</span>
+                                <span class="font-normal text-slate-400">4 h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comment 5 -->
+                    <div class="flex gap-2">
+                        <img src="https://ik.imagekit.io/alvoecom/1773363393203.webp" class="w-10 h-10 rounded-full object-cover shrink-0" alt="Profile">
+                        <div>
+                            <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
+                                <span class="font-bold text-fbblue cursor-pointer hover:underline">Patrícia G.</span>
+                                <p class="text-[#050505] mt-0.5 leading-snug">Eu tinha vergonha de ir pra praia com meu marido... Esse final de semana fui de shorts e me senti livre! Meu casamento é outro e eu sou outra mulher.</p>
+                            </div>
+                            <div class="flex items-center gap-1 mt-1 -mb-1 ml-2">
+                                <div class="bg-white rounded-full p-0.5 shadow-sm border border-slate-100 flex items-center">
+                                    <span class="text-sm">❤️</span>
+                                </div>
+                                <span class="text-xs text-slate-500">28</span>
+                            </div>
+                            <div class="text-xs text-fbgray mt-1 font-semibold flex gap-3 ml-2">
+                                <span class="cursor-pointer hover:underline">Curtir</span>
+                                <span class="cursor-pointer hover:underline">Responder</span>
+                                <span class="font-normal text-slate-400">6 h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comment 6 -->
+                    <div class="flex gap-2">
+                        <img src="https://ik.imagekit.io/alvoecom/1736027881188.webp" class="w-10 h-10 rounded-full object-cover shrink-0" alt="Profile">
+                        <div>
+                            <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
+                                <span class="font-bold text-fbblue cursor-pointer hover:underline">Silvana Moraes</span>
+                                <p class="text-[#050505] mt-0.5 leading-snug">Doutora, alguém sabe se diabético pode tomar? Queria muito testar.</p>
+                            </div>
+                            <div class="text-xs text-fbgray mt-1 font-semibold flex gap-3 ml-2">
+                                <span class="cursor-pointer hover:underline">Curtir</span>
+                                <span class="cursor-pointer hover:underline">Responder</span>
+                                <span class="font-normal text-slate-400">8 h</span>
+                            </div>
+
+                            <!-- Reply Author -->
+                            <div class="flex gap-2 mt-2 ml-4">
+                                <img src="https://ik.imagekit.io/alvoecom/ChatGPT%20Image%203%20de%20jun.%20de%202026,%2019_19_57%20(1).webp" class="w-8 h-8 rounded-full object-cover shrink-0 border border-slate-200" alt="Profile">
+                                <div>
+                                    <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
+                                        <span class="font-bold text-fbblue cursor-pointer hover:underline">Suporte Dra. Helena</span>
+                                        <span class="bg-fbblue text-white text-[10px] px-1 py-0.5 rounded ml-1 font-bold">Autor</span>
+                                        <p class="text-[#050505] mt-0.5 leading-snug">Olá Silvana, sim! O chá vermelho utiliza apenas ativos botânicos naturais e não eleva a glicemia. Pode usar sem medo. 🥰</p>
+                                    </div>
+                                    <div class="text-xs text-fbgray mt-1 font-semibold flex gap-3 ml-2">
+                                        <span class="cursor-pointer hover:underline">Curtir</span>
+                                        <span class="cursor-pointer hover:underline">Responder</span>
+                                        <span class="font-normal text-slate-400">7 h</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comment 7 -->
+                    <div class="flex gap-2">
+                        <img src="https://ik.imagekit.io/alvoecom/1727092828092.webp" class="w-10 h-10 rounded-full object-cover shrink-0" alt="Profile">
+                        <div>
+                            <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
+                                <span class="font-bold text-fbblue cursor-pointer hover:underline">Aparecida Viana</span>
+                                <p class="text-[#050505] mt-0.5 leading-snug">Minha perna vivia cheia de roxo. Nem acredito que era gordura bloqueada e nenhum médico nunca me falou isso. Começando o protocolo hoje, não vejo a hora de desinchar.</p>
+                            </div>
+                            <div class="text-xs text-fbgray mt-1 font-semibold flex gap-3 ml-2">
+                                <span class="cursor-pointer hover:underline">Curtir</span>
+                                <span class="cursor-pointer hover:underline">Responder</span>
+                                <span class="font-normal text-slate-400">12 h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comment 8 -->
+                    <div class="flex gap-2">
+                        <img src="https://ik.imagekit.io/alvoecom/1719582228332.webp" class="w-10 h-10 rounded-full object-cover shrink-0" alt="Profile">
+                        <div>
+                            <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
+                                <span class="font-bold text-fbblue cursor-pointer hover:underline">Elaine Costa</span>
+                                <p class="text-[#050505] mt-0.5 leading-snug">Eu tenho 53 anos e achei que era tarde pra mim. Doutora, Deus te abençoe por compartilhar isso por um preço tão acessível, a consulta na minha cidade é R$400 reais e o médico nem olha na cara.</p>
+                            </div>
+                            <div class="flex items-center gap-1 mt-1 -mb-1 ml-2">
+                                <div class="bg-white rounded-full p-0.5 shadow-sm border border-slate-100 flex items-center">
+                                    <span class="text-sm">🙏❤️</span>
+                                </div>
+                                <span class="text-xs text-slate-500">45</span>
+                            </div>
+                            <div class="text-xs text-fbgray mt-1 font-semibold flex gap-3 ml-2">
+                                <span class="cursor-pointer hover:underline">Curtir</span>
+                                <span class="cursor-pointer hover:underline">Responder</span>
+                                <span class="font-normal text-slate-400">14 h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const questions = [
+            {
+                question: "Qual é a sua faixa etária atual?",
+                options: [
+                    "De 18 a 30 anos (Notei o acúmulo recentemente)",
+                    "De 31 a 45 anos (Foi aumentando com o tempo)",
+                    "De 46 a 55 anos (O volume intensificou após mudanças hormonais)",
+                    "Acima de 56 anos (Lido com isso há muito tempo)"
+                ]
+            },
+            {
+                question: "Como você descreveria a diferença de medidas no seu corpo hoje?",
+                options: [
+                    "É visível. Emagreço no rosto e braços, mas as coxas não acompanham",
+                    "Acúmulo teimoso do quadril para baixo que não sai de jeito nenhum",
+                    "Meu tronco é miúdo, mas minhas pernas retêm muito peso e volume"
+                ]
+            },
+            {
+                question: "Ao longo do dia, qual destas sensações é mais comum nas suas pernas?",
+                options: [
+                    "Sinto um aspecto endurecido ou irregular debaixo da pele",
+                    "Sensação constante de cansaço, peso extremo e inchaço",
+                    "Sensibilidade maior ao toque ou marcas que aparecem sem motivo",
+                    "Sinto todas as opções acima frequentemente"
+                ]
+            },
+            {
+                question: "O que mais te frustra hoje ao tentar melhorar o aspecto das suas pernas?",
+                options: [
+                    "Faço academia/cardio, dou o meu melhor, mas a proporção não muda",
+                    "Já perdi peso na balança, mas o volume das pernas continuou igual",
+                    "A sensação de se esforçar muito e não ver o resultado refletido no espelho"
+                ]
+            },
+            {
+                question: "Como esse volume teimoso afeta as suas escolhas no dia a dia?",
+                options: [
+                    "Evito roupas curtas (shorts ou saias) por não me sentir à vontade",
+                    "Sinto certa insegurança ao ir à praia ou usar biquíni",
+                    "Acaba afetando minha confiança na minha intimidade"
+                ]
+            },
+            {
+                question: "Se você descobrisse que esse acúmulo NÃO é culpa sua, qual seria sua urgência em testar um truque natural para suavizar isso?",
+                options: [
+                    "Urgência máxima! Gostaria de testar algo que realmente faça sentido.",
+                    "Começaria hoje mesmo, busco recuperar a leveza o quanto antes.",
+                    "Sim, estou muito interessada em ver minhas pernas mais proporcionais."
+                ]
+            },
+            {
+                question: "Você toparia dedicar apenas 2 minutos da sua manhã preparando o 'Truque do Chá Vermelho' para ajudar a destravar esse volume?",
+                options: [
+                    "Sim! Estou disposta a dedicar 2 minutos por dia.",
+                    "Com certeza. É um tempo muito pequeno para o benefício.",
+                    "Sim, estou 100% comprometida em aplicar o método."
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const loadingScreen = document.getElementById('loading-screen');
+        const vslScreen = document.getElementById('vsl-screen');
+        const questionContainer = document.getElementById('question-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+
+        function startQuiz() {
+            startScreen.classList.add('hidden-section');
+            quizScreen.classList.remove('hidden-section');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestion];
+            const progressPercentage = Math.round((currentQuestion / questions.length) * 100);
+            
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.innerText = `${progressPercentage}%`;
+
+            let html = `
+                <div class="animate-slide-up bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h2 class="text-xl md:text-2xl font-bold mb-6 leading-snug text-slate-800">${q.question}</h2>
+                    <div class="flex flex-col gap-3">
+            `;
+
+            q.options.forEach((opt, index) => {
+                html += `
+                    <button onclick="handleAnswer()" class="btn-option w-full text-left bg-slate-50 border border-slate-200 hover:border-clinicalblue hover:bg-blue-50 p-4 rounded-xl text-sm md:text-base font-medium text-slate-700 shadow-sm">
+                        ${opt}
+                    </button>
+                `;
+            });
+
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            questionContainer.innerHTML = html;
+        }
+
+        function handleAnswer() {
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                questionContainer.classList.remove('animate-fade-in');
+                questionContainer.classList.add('opacity-0');
+                
+                setTimeout(() => {
+                    renderQuestion();
+                    questionContainer.classList.remove('opacity-0');
+                    questionContainer.classList.add('animate-fade-in');
+                }, 200);
+            } else {
+                showLoadingScreen();
+            }
+        }
+
+        function showLoadingScreen() {
+            quizScreen.classList.add('hidden-section');
+            loadingScreen.classList.remove('hidden-section');
+
+            const texts = [
+                "Processando suas respostas...",
+                "Cruzando dados do seu biotipo...",
+                "Identificando padrões de retenção...",
+                "<span class='text-alertred font-bold'>⚠️ ALERTA: Nível severo de bloqueio detectado.</span>",
+                "Preparando vídeo explicativo do seu resultado..."
+            ];
+
+            const textElement = document.getElementById('loading-text');
+            let textIndex = 0;
+
+            const interval = setInterval(() => {
+                textElement.style.opacity = '0';
+                
+                setTimeout(() => {
+                    textIndex++;
+                    if(textIndex < texts.length) {
+                        textElement.innerHTML = texts[textIndex];
+                        textElement.style.opacity = '1';
+                    } else {
+                        clearInterval(interval);
+                        showVSL();
+                    }
+                }, 300);
+
+            }, 1800);
+        }
+
+        function showVSL() {
+            loadingScreen.classList.add('hidden-section');
+            vslScreen.classList.remove('hidden-section');
+            
+            // Injeta o player do VTurb apenas agora, impedindo que toque no fundo durante o quiz
+            const vturbContainer = document.getElementById('vturb-container');
+            vturbContainer.innerHTML = '<vturb-smartplayer id="vid-6a20a529e90df3848a273adf" style="display: block; margin: 0 auto; width: 100%; max-width: 800px; border-radius: 8px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);"></vturb-smartplayer>';
+            
+            // Chama o script de execução do VTurb
+            var s = document.createElement("script");
+            s.src = "https://scripts.converteai.net/8517e3d1-7796-43ee-bf69-c35b2f2f45b1/players/6a20a529e90df3848a273adf/v4/player.js";
+            s.async = true;
+            document.head.appendChild(s);
+        }
+    </script>
+</body>
+</html>
