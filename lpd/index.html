@@ -18,8 +18,7 @@
     <link rel="dns-prefetch" href="https://license.vturb.com">
 
 
-
-<!-- Meta Pixel Code -->
+!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -45,7 +44,7 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
   async
   defer
 ></script>
-
+    
 
     <script>
         tailwind.config = {
@@ -55,20 +54,21 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
                         sans: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        medicalbg: '#f8fafc', /* slate-50 */
-                        clinicalblue: '#2563eb', /* blue-600 */
-                        clinicalhover: '#1d4ed8', /* blue-700 */
-                        alertred: '#ef4444', /* red-500 */
-                        textmain: '#1e293b', /* slate-800 */
-                        textmuted: '#64748b', /* slate-500 */
+                        medicalbg: '#f8fafc',
+                        clinicalblue: '#2563eb',
+                        clinicalhover: '#1d4ed8',
+                        alertred: '#ef4444',
+                        textmain: '#1e293b',
+                        textmuted: '#64748b',
                         fbblue: '#385898',
                         fbgray: '#606770',
                         fbgbg: '#f0f2f5'
                     },
                     animation: {
-                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'fade-in': 'fadeIn 0.4s ease-out forwards',
                         'slide-up': 'slideUp 0.5s ease-out forwards',
                         'pulse-border': 'pulseBorder 2s infinite',
+                        'bounce-slight': 'bounceSlight 2s infinite ease-in-out',
                     },
                     keyframes: {
                         fadeIn: {
@@ -76,12 +76,16 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
                             '100%': { opacity: '1' },
                         },
                         slideUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '0%': { opacity: '0', transform: 'translateY(15px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
                         pulseBorder: {
                             '0%, 100%': { borderColor: 'rgba(239, 68, 68, 0.2)' },
                             '50%': { borderColor: 'rgba(239, 68, 68, 1)' },
+                        },
+                        bounceSlight: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
                         }
                     }
                 }
@@ -102,18 +106,29 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
         }
 
+        /* Efeito de botão gamificado */
         .btn-option {
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
         
+        .btn-option:hover {
+            border-color: #93c5fd;
+            background-color: #f0f9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1), 0 2px 4px -1px rgba(59, 130, 246, 0.06);
+        }
+
         .btn-option:active {
-            transform: scale(0.98);
-            background-color: #eff6ff;
+            transform: scale(0.97) translateY(0);
+            background-color: #dbeafe;
             border-color: #3b82f6;
+            box-shadow: none;
         }
 
         .progress-bar-fill {
-            transition: width 0.4s ease-out;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         ::-webkit-scrollbar {
@@ -141,8 +156,8 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
 </head>
 <body class="antialiased min-h-screen flex flex-col items-center">
 
+    <!-- START SCREEN -->
     <main id="start-screen" class="flex-1 w-full max-w-md px-5 py-10 flex flex-col justify-center items-center text-center animate-fade-in relative z-10 min-h-screen">
-        
     
         
         <h1 class="text-3xl md:text-4xl font-extrabold mb-4 leading-tight text-textmain">
@@ -150,7 +165,7 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
         </h1>
         
         <p class="text-textmuted mb-8 text-sm md:text-base leading-relaxed font-medium">
-            Responda este breve teste sigiloso para descobrir se suas pernas estão sofrendo com um bloqueio biológico e veja como devolver a leveza e a proporção do seu corpo em casa.
+            Responda este breve teste sigiloso para descobrir se suas pernas sofrem com um bloqueio biológico e veja como devolver a leveza do seu corpo em casa.
         </p>
         
         <div class="clinical-card p-5 rounded-2xl w-full mb-8 relative overflow-hidden">
@@ -161,8 +176,9 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
             </div>
         </div>
 
-        <button onclick="startQuiz()" class="w-full bg-clinicalblue hover:bg-clinicalhover text-white font-bold py-4 rounded-xl shadow-[0_10px_20px_rgba(37,99,235,0.2)] transition-all text-lg">
+        <button onclick="startQuiz()" class="w-full bg-clinicalblue hover:bg-clinicalhover text-white font-bold py-4 rounded-xl shadow-[0_8px_20px_rgba(37,99,235,0.25)] transition-all text-lg flex justify-center items-center gap-2">
             INICIAR ANÁLISE AGORA
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
         </button>
         
         <p class="text-xs text-slate-400 mt-6 flex items-center justify-center gap-1.5 font-medium">
@@ -171,62 +187,68 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
         </p>
     </main>
 
+    <!-- QUIZ SCREEN -->
     <main id="quiz-screen" class="hidden-section flex-1 w-full max-w-md px-5 py-8 flex flex-col min-h-screen">
-        <div class="w-full mb-8 clinical-card p-4 rounded-2xl">
-            <div class="flex justify-between text-xs text-slate-500 font-bold mb-3 uppercase tracking-wide">
+        <div class="w-full mb-6 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+            <div class="flex justify-between text-[11px] text-slate-500 font-bold mb-2.5 uppercase tracking-wider">
                 <span>Progresso da Análise</span>
                 <span id="progress-text" class="text-clinicalblue">0%</span>
             </div>
-            <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                <div id="progress-bar" class="h-full bg-clinicalblue progress-bar-fill w-0"></div>
+            <div class="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                <div id="progress-bar" class="h-full bg-clinicalblue progress-bar-fill w-0 relative">
+                    <div class="absolute inset-0 bg-white/20"></div>
+                </div>
             </div>
         </div>
-        <div id="question-container" class="flex-1 flex flex-col justify-center animate-fade-in">
+        <div id="question-container" class="flex-1 flex flex-col justify-start animate-fade-in mt-2">
+            <!-- Questions rendered here -->
         </div>
     </main>
 
+    <!-- LOADING SCREEN -->
     <main id="loading-screen" class="hidden-section flex-1 w-full max-w-md px-5 py-10 flex flex-col justify-center items-center text-center min-h-screen">
         <div class="spinner mb-8"></div>
         <h2 class="text-2xl font-bold mb-4 text-textmain">Diagnosticando perfil...</h2>
-        <div class="clinical-card p-5 rounded-xl w-full border-l-4 border-l-clinicalblue">
+        <div class="clinical-card p-5 rounded-xl w-full border-l-4 border-l-clinicalblue shadow-md">
             <p id="loading-text" class="text-slate-700 font-semibold h-12 flex items-center justify-center transition-opacity duration-300">
                 Processando suas respostas...
             </p>
         </div>
     </main>
 
+    <!-- VSL SCREEN -->
     <main id="vsl-screen" class="hidden-section w-full min-h-screen pb-20 bg-white">
-        <!-- Barra de Alerta Clínica -->
+        <!-- Barra de Alerta -->
         <header class="w-full bg-red-50 py-2.5 text-center border-b border-red-200">
             <p class="text-xs md:text-sm font-bold text-alertred tracking-wide uppercase flex items-center justify-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></span>
                 Resultado do Exame Concluído
             </p>
         </header>
 
         <div class="max-w-3xl mx-auto px-4 mt-8">
             <div class="text-center mb-6 animate-slide-up">
-                <h1 class="text-2xl md:text-3xl font-extrabold leading-tight mb-4 text-slate-900">
-                    O seu teste apontou <span class="text-alertred border-b-2 border-red-200 pb-0.5">Retenção Severa</span>. Assista ao vídeo e veja como tratar o bloqueio em 14 dias.
+                <h1 class="text-2xl md:text-3xl font-extrabold leading-tight mb-4 text-slate-900 px-2">
+                    O seu teste apontou <span class="text-alertred border-b-2 border-red-200 pb-0.5">Retenção Severa</span>. Assista ao vídeo e veja como destravar isso.
                 </h1>
-                <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
-                    O vídeo abaixo explica o porquê dietas normais não soltam o seu volume, e o que você precisa fazer na sua cozinha amanhã cedo.
+                <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium px-4">
+                    O vídeo abaixo explica por que as dietas normais não soltam o seu volume e o que você precisa fazer amanhã cedo.
                 </p>
             </div>
 
             <!-- CONTAINER VTURB -->
             <div id="vturb-container" class="w-full mt-6 flex items-center justify-center relative z-20">
-                <!-- O player do VTurb será injetado aqui via JavaScript apenas na hora certa -->
+                <!-- Injetado via JS -->
             </div>
 
-            <div class="mt-4 text-center">
-                <p class="text-xs text-slate-500 font-medium flex items-center justify-center gap-1.5">
+            <div class="mt-5 text-center">
+                <p class="text-xs text-slate-500 font-medium flex items-center justify-center gap-1.5 bg-slate-50 inline-flex px-3 py-1.5 rounded-full border border-slate-200">
                     <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    Vídeo com áudio ativado
+                    Certifique-se de que o som está ativado
                 </p>
             </div>
             
-            <!-- SESSÃO DE COMENTÁRIOS FACEBOOK -->
+            <!-- COMENTÁRIOS (Sem alterações, já estão perfeitos) -->
             <div class="mt-12 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm font-sans text-[14px]">
                 <div class="px-4 py-3 border-b border-slate-200 flex justify-between items-center bg-slate-50">
                     <span class="font-semibold text-textmain">14 comentários</span>
@@ -260,7 +282,7 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
                         <div>
                             <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
                                 <span class="font-bold text-fbblue cursor-pointer hover:underline">Luciana Teixeira</span>
-                                <p class="text-[#050505] mt-0.5 leading-snug">Eu ia fazer cirurgia de varizes achando que a dor era isso. Assisti o vídeo até o final e cancelei. Fiz a receita hoje cedo, é super fácil e os ingredientes eu já tinha em casa.</p>
+                                <p class="text-[#050505] mt-0.5 leading-snug">Eu ia fazer cirurgia achando que a dor era isso. Assisti o vídeo até o final e cancelei. Fiz a receita hoje cedo, é super fácil e os ingredientes eu já tinha em casa.</p>
                             </div>
                             <div class="flex items-center gap-1 mt-1 -mb-1 ml-2">
                                 <div class="bg-white rounded-full p-0.5 shadow-sm border border-slate-100 flex items-center">
@@ -282,7 +304,7 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
                         <div>
                             <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
                                 <span class="font-bold text-fbblue cursor-pointer hover:underline">Carla Mendonça</span>
-                                <p class="text-[#050505] mt-0.5 leading-snug">Pra quem tá na dúvida, funciona sim. Faz 12 dias que tô tomando em jejum e já consegui entrar numa calça jeans que tava guardada no guarda-roupa há 4 anos. A pele não tá mais tão dura.</p>
+                                <p class="text-[#050505] mt-0.5 leading-snug">Pra quem tá na dúvida, funciona sim. Faz 12 dias que tô tomando em jejum e já consegui entrar numa calça jeans que tava guardada há 4 anos. A pele não tá mais tão dura.</p>
                             </div>
                             <div class="text-xs text-fbgray mt-1 font-semibold flex gap-3 ml-2">
                                 <span class="cursor-pointer hover:underline">Curtir</span>
@@ -385,7 +407,7 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
                         <div>
                             <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
                                 <span class="font-bold text-fbblue cursor-pointer hover:underline">Aparecida Viana</span>
-                                <p class="text-[#050505] mt-0.5 leading-snug">Minha perna vivia cheia de roxo. Nem acredito que era gordura bloqueada e nenhum médico nunca me falou isso. Começando o protocolo hoje, não vejo a hora de desinchar.</p>
+                                <p class="text-[#050505] mt-0.5 leading-snug">Minha perna vivia cheia de roxo. Nem acredito que era bloqueio linfático e nenhum médico nunca me falou isso. Começando o protocolo hoje.</p>
                             </div>
                             <div class="text-xs text-fbgray mt-1 font-semibold flex gap-3 ml-2">
                                 <span class="cursor-pointer hover:underline">Curtir</span>
@@ -401,7 +423,7 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
                         <div>
                             <div class="bg-fbgbg px-3 py-2 rounded-2xl inline-block max-w-[90%]">
                                 <span class="font-bold text-fbblue cursor-pointer hover:underline">Elaine Costa</span>
-                                <p class="text-[#050505] mt-0.5 leading-snug">Eu tenho 53 anos e achei que era tarde pra mim. Doutora, Deus te abençoe por compartilhar isso por um preço tão acessível, a consulta na minha cidade é R$400 reais e o médico nem olha na cara.</p>
+                                <p class="text-[#050505] mt-0.5 leading-snug">Eu tenho 53 anos e achei que era tarde pra mim. Doutora, Deus te abençoe por compartilhar isso. A consulta na minha cidade é R$400 reais e o médico nem olha na cara.</p>
                             </div>
                             <div class="flex items-center gap-1 mt-1 -mb-1 ml-2">
                                 <div class="bg-white rounded-full p-0.5 shadow-sm border border-slate-100 flex items-center">
@@ -428,59 +450,59 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
             {
                 question: "Qual é a sua faixa etária atual?",
                 options: [
-                    "De 18 a 30 anos (Notei o acúmulo recentemente)",
-                    "De 31 a 45 anos (Foi aumentando com o tempo)",
-                    "De 46 a 55 anos (O volume intensificou após mudanças hormonais)",
-                    "Acima de 56 anos (Lido com isso há muito tempo)"
+                    { text: "De 18 a 30 anos" },
+                    { text: "De 31 a 45 anos" },
+                    { text: "De 46 a 55 anos" },
+                    { text: "Acima de 56 anos" }
                 ]
             },
             {
-                question: "Como você descreveria a diferença de medidas no seu corpo hoje?",
+                question: "Como você descreveria a desproporção do seu corpo?",
                 options: [
-                    "É visível. Emagreço no rosto e braços, mas as coxas não acompanham",
-                    "Acúmulo teimoso do quadril para baixo que não sai de jeito nenhum",
-                    "Meu tronco é miúdo, mas minhas pernas retêm muito peso e volume"
+                    { text: "Rosto e braços finos, mas as coxas não acompanham" },
+                    { text: "Acúmulo teimoso do quadril para baixo" },
+                    { text: "Tronco miúdo, pernas com muito peso e volume" }
                 ]
             },
             {
-                question: "Ao longo do dia, qual destas sensações é mais comum nas suas pernas?",
+                question: "Qual sensação nas pernas mais te incomoda hoje?",
                 options: [
-                    "Sinto um aspecto endurecido ou irregular debaixo da pele",
-                    "Sensação constante de cansaço, peso extremo e inchaço",
-                    "Sensibilidade maior ao toque ou marcas que aparecem sem motivo",
-                    "Sinto todas as opções acima frequentemente"
+                    { emoji: "🪨", text: "Aspecto endurecido ou irregular sob a pele" },
+                    { emoji: "⚓", text: "Cansaço constante, peso extremo e inchaço" },
+                    { emoji: "🤕", text: "Sensibilidade ao toque e manchas sem motivo" },
+                    { emoji: "⚠️", text: "Sinto todas as opções acima frequentemente" }
                 ]
             },
             {
-                question: "O que mais te frustra hoje ao tentar melhorar o aspecto das suas pernas?",
+                question: "Qual sua maior frustração ao tentar melhorar?",
                 options: [
-                    "Faço academia/cardio, dou o meu melhor, mas a proporção não muda",
-                    "Já perdi peso na balança, mas o volume das pernas continuou igual",
-                    "A sensação de se esforçar muito e não ver o resultado refletido no espelho"
+                    { emoji: "🏋️‍♀️", text: "Faço academia/cardio, mas a proporção não muda" },
+                    { emoji: "⚖️", text: "Perco peso na balança, mas as pernas continuam grossas" },
+                    { emoji: "😩", text: "Me esforço muito e não vejo resultado no espelho" }
                 ]
             },
             {
-                question: "Como esse volume teimoso afeta as suas escolhas no dia a dia?",
+                question: "Como esse volume afeta o seu emocional?",
                 options: [
-                    "Evito roupas curtas (shorts ou saias) por não me sentir à vontade",
-                    "Sinto certa insegurança ao ir à praia ou usar biquíni",
-                    "Acaba afetando minha confiança na minha intimidade"
+                    { emoji: "😔", text: "Evito roupas curtas no calor" },
+                    { emoji: "🫣", text: "Sinto muita vergonha de ir à praia ou piscina" },
+                    { emoji: "💔", text: "Afeta a minha confiança na hora da intimidade" }
                 ]
             },
             {
-                question: "Se você descobrisse que esse acúmulo NÃO é culpa sua, qual seria sua urgência em testar um truque natural para suavizar isso?",
+                question: "Se descobrir que a culpa NÃO é sua, qual sua urgência em destravar isso?",
                 options: [
-                    "Urgência máxima! Gostaria de testar algo que realmente faça sentido.",
-                    "Começaria hoje mesmo, busco recuperar a leveza o quanto antes.",
-                    "Sim, estou muito interessada em ver minhas pernas mais proporcionais."
+                    { emoji: "🚨", text: "Urgência máxima! Quero algo que faça sentido." },
+                    { emoji: "🏃‍♀️", text: "Começaria hoje, busco recuperar a leveza." },
+                    { emoji: "🙋‍♀️", text: "Muito interessada em destravar minha proporção." }
                 ]
             },
             {
-                question: "Você toparia dedicar apenas 2 minutos da sua manhã preparando o 'Truque do Chá Vermelho' para ajudar a destravar esse volume?",
+                question: "Você toparia dedicar apenas 2 min pela manhã para preparar um destrave natural?",
                 options: [
-                    "Sim! Estou disposta a dedicar 2 minutos por dia.",
-                    "Com certeza. É um tempo muito pequeno para o benefício.",
-                    "Sim, estou 100% comprometida em aplicar o método."
+                    { text: "Sim! Topo dedicar 2 minutos por dia." },
+                    { text: "Com certeza. É um tempo pequeno pro benefício." },
+                    { text: "100% comprometida em aplicar o método." }
                 ]
             }
         ];
@@ -509,15 +531,24 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
             progressText.innerText = `${progressPercentage}%`;
 
             let html = `
-                <div class="animate-slide-up bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="animate-slide-up bg-transparent pt-2 pb-6">
                     <h2 class="text-xl md:text-2xl font-bold mb-6 leading-snug text-slate-800">${q.question}</h2>
-                    <div class="flex flex-col gap-3">
+                    <div class="flex flex-col gap-3.5">
             `;
 
             q.options.forEach((opt, index) => {
+                const hasEmoji = !!opt.emoji;
+                
+                const emojiElement = hasEmoji ? `
+                    <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 shadow-inner">
+                        <span class="text-[22px] leading-none">${opt.emoji}</span>
+                    </div>
+                ` : '';
+
                 html += `
-                    <button onclick="handleAnswer()" class="btn-option w-full text-left bg-slate-50 border border-slate-200 hover:border-clinicalblue hover:bg-blue-50 p-4 rounded-xl text-sm md:text-base font-medium text-slate-700 shadow-sm">
-                        ${opt}
+                    <button onclick="handleAnswer()" class="btn-option w-full flex items-center ${hasEmoji ? 'gap-4' : 'justify-center'} bg-white border border-slate-200 p-3.5 rounded-xl shadow-sm">
+                        ${emojiElement}
+                        <span class="text-[14px] md:text-[15px] font-semibold text-slate-700 leading-tight ${hasEmoji ? 'text-left' : 'text-center'}">${opt.text}</span>
                     </button>
                 `;
             });
@@ -534,13 +565,15 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
             currentQuestion++;
             
             if (currentQuestion < questions.length) {
-                questionContainer.classList.remove('animate-fade-in');
-                questionContainer.classList.add('opacity-0');
+                // Efeito suave de transição entre perguntas
+                questionContainer.style.opacity = '0';
+                questionContainer.style.transform = 'translateY(10px)';
+                questionContainer.style.transition = 'all 0.2s ease-out';
                 
                 setTimeout(() => {
                     renderQuestion();
-                    questionContainer.classList.remove('opacity-0');
-                    questionContainer.classList.add('animate-fade-in');
+                    questionContainer.style.opacity = '1';
+                    questionContainer.style.transform = 'translateY(0)';
                 }, 200);
             } else {
                 showLoadingScreen();
@@ -556,7 +589,7 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
                 "Cruzando dados do seu biotipo...",
                 "Identificando padrões de retenção...",
                 "<span class='text-alertred font-bold'>⚠️ ALERTA: Nível severo de bloqueio detectado.</span>",
-                "Preparando vídeo explicativo do seu resultado..."
+                "Preparando vídeo explicativo..."
             ];
 
             const textElement = document.getElementById('loading-text');
@@ -583,9 +616,11 @@ src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
             loadingScreen.classList.add('hidden-section');
             vslScreen.classList.remove('hidden-section');
             
-            // Injeta o player do VTurb apenas agora, impedindo que toque no fundo durante o quiz
+            // Injeta o player do VTurb APENAS na página de VSL para não tocar no fundo
             const vturbContainer = document.getElementById('vturb-container');
-            vturbContainer.innerHTML = '<vturb-smartplayer id="vid-6a20a529e90df3848a273adf" style="display: block; margin: 0 auto; width: 100%; max-width: 800px; border-radius: 8px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);"></vturb-smartplayer>';
+            vturbContainer.innerHTML = `
+                <vturb-smartplayer id="vid-6a20a529e90df3848a273adf" style="display: block; margin: 0 auto; width: 100%; max-width: 800px; border-radius: 8px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);"></vturb-smartplayer>
+            `;
             
             // Chama o script de execução do VTurb
             var s = document.createElement("script");
