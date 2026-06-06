@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua História - Dark Romance Personalizado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === BASE E CORES === */
+        :root {
+            --bg-color: #0A0A0A;
+            --bg-card: #141414;
+            --primary: #8B2035; /* Vermelho escuro/Vinho */
+            --primary-hover: #A82842;
+            --accent: #C9A96E; /* Dourado */
+            --accent-hover: #D4BA85;
+            --text-light: #F5F0EB;
+            --text-muted: #8a8a8a;
+            --text-dark: #3a3a3a;
+            --border: #2a2a2a;
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: 'Outfit', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* === LAYOUT DO QUIZ === */
+        .fq-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .fq-inner {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px 24px;
+        }
+
+        .fq-card {
+            width: 100%;
+            max-width: 540px;
+            animation: fqFadeUp .45s ease both;
+        }
+
+        @keyframes fqFadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === BARRA DE PROGRESSO === */
+        .fq-progress {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 28px;
+        }
+        .fq-progress-bar {
+            flex: 1;
+            height: 3px;
+            border-radius: 2px;
+            background: #1f1f1f;
+            transition: background .4s;
+        }
+        .fq-progress-bar.done { background: var(--primary); }
+        .fq-progress-bar.active { background: var(--accent); }
+        
+        .fq-step-count {
+            font-family: var(--font-sans);
+            font-size: 11px;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* === BADGES E GARANTIAS === */
+        .fq-lock-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 10px 16px;
+            background: rgba(201,169,110,.04);
+            border: 1px solid rgba(201,169,110,.1);
+            border-radius: 8px;
+        }
+        .fq-lock-badge span {
+            font-size: 13px;
+            color: #6B6B6B;
+            letter-spacing: .3px;
+        }
+        .fq-guarantee {
+            background: var(--bg-card);
+            border: 1px solid rgba(201,169,110,.15);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-top: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .fq-guarantee-headline {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--accent);
+            margin-bottom: 6px;
+            letter-spacing: .3px;
+        }
+        .fq-guarantee-sub {
+            font-weight: 300;
+            font-size: 13px;
+            color: #6B6B6B;
+            line-height: 1.6;
+        }
+
+        /* === INTRODUÇÃO === */
+        .fq-intro { text-align: center; }
+        .fq-intro-eyebrow {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 14px;
+        }
+        .fq-intro-title {
+            font-family: var(--font-serif);
+            font-weight: 300;
+            font-size: 40px;
+            color: var(--text-light);
+            line-height: 1.15;
+            margin: 0 0 10px 0;
+        }
+        .fq-intro-title em {
+            font-weight: 700;
+            font-style: italic;
+            color: var(--accent);
+            display: block;
+        }
+        .fq-intro-sub {
+            font-weight: 300;
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            max-width: 420px;
+            margin: 0 auto 28px auto;
+        }
+        .fq-intro-cta {
+            display: inline-block;
+            padding: 16px 52px;
+            background: var(--primary);
+            color: var(--text-light);
+            border: none;
+            border-radius: 6px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .25s;
+        }
+        .fq-intro-cta:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        .fq-intro-trust {
+            margin-top: 18px;
+            font-size: 14px;
+            color: #4a4a4a;
+        }
+        .fq-gold { color: var(--accent); }
+
+        /* === TELAS === */
+        .fq-screen { display: none; }
+        .fq-screen.active { display: block; }
+        
+        .fq-step-title {
+            font-family: var(--font-serif);
+            font-weight: 300;
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+        .fq-step-title em {
+            font-weight: 700;
+            font-style: italic;
+            color: var(--accent);
+        }
+        .fq-step-sub {
+            font-size: 15px;
+            color: #6B6B6B;
+            text-align: center;
+            margin-bottom: 22px;
+            line-height: 1.5;
+        }
+
+        /* === FORMULÁRIO === */
+        .fq-field { margin-bottom: 16px; width: 100%; }
+        .fq-label {
+            font-weight: 500;
+            font-size: 12px;
+            color: #b8b8b8;
+            letter-spacing: .5px;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .fq-input, .fq-select, .fq-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-family: var(--font-sans);
+            font-weight: 300;
+            font-size: 16px;
+            transition: border-color .3s;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .fq-input:focus, .fq-select:focus, .fq-textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(201,169,110,.1);
+        }
+        .fq-input::placeholder, .fq-textarea::placeholder {
+            color: var(--text-dark);
+            font-style: italic;
+        }
+        .fq-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C9A96E' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+        .fq-select option { background: var(--bg-card); color: var(--text-light); }
+        .fq-textarea { resize: vertical; min-height: 100px; }
+        .fq-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .fq-other-input { display: none; margin-top: 8px; }
+        .fq-hint {
+            font-size: 11px;
+            color: #4a4a4a;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* === INTENSIDADE (CARDS) === */
+        .fq-intensity { display: flex; gap: 10px; }
+        .fq-intensity-card {
+            flex: 1;
+            padding: 16px 10px;
+            text-align: center;
+            cursor: pointer;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: all .3s;
+        }
+        .fq-intensity-card:hover { border-color: #3a3a3a; }
+        .fq-intensity-card.selected {
+            border-color: var(--accent);
+            background: rgba(201,169,110,.08);
+        }
+        .fq-intensity-icon { margin-bottom: 6px; }
+        .fq-intensity-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 3px;
+        }
+        .fq-intensity-desc {
+            font-weight: 300;
+            font-size: 11px;
+            color: #6B6B6B;
+        }
+
+        /* === UPGRADES E ADICIONAIS === */
+        .fq-upgrade-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all .3s;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .fq-upgrade-card:hover { border-color: #3a3a3a; }
+        .fq-upgrade-card.selected, .fq-upgrade-card.included {
+            border-color: var(--accent);
+            background: rgba(201,169,110,.06);
+        }
+        .fq-upgrade-icon {
+            font-size: 13px;
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(201,169,110,.08);
+            border-radius: 8px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .fq-upgrade-info { flex: 1; }
+        .fq-upgrade-name {
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 2px;
+        }
+        .fq-upgrade-desc {
+            font-weight: 300;
+            font-size: 11px;
+            color: #6B6B6B;
+            line-height: 1.4;
+        }
+        .fq-upgrade-price {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        .fq-upgrade-price.free { font-weight: 500; font-size: 12px; }
+        .fq-upgrade-check {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .3s;
+            color: transparent;
+        }
+        .fq-upgrade-card.selected .fq-upgrade-check, .fq-upgrade-card.included .fq-upgrade-check {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: #0A0A0A;
+            font-size: 12px;
+        }
+        .fq-upgrade-card.selected .fq-upgrade-check::after, .fq-upgrade-card.included .fq-upgrade-check::after {
+            content: '✓';
+        }
+
+        /* === RECIBO / RESUMO === */
+        .fq-receipt {
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin-top: 16px;
+            text-align: left;
+        }
+        .fq-receipt-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 13px;
+            gap: 8px;
+        }
+        .fq-receipt-row.sub { color: var(--text-muted); }
+        .fq-receipt-row.discount { color: var(--primary); }
+        .fq-receipt-row.discount .fq-receipt-val { font-weight: 600; }
+        .fq-receipt-row.addon { color: var(--text-muted); }
+        .fq-receipt-row.total {
+            border-top: 1px solid var(--border);
+            margin-top: 6px;
+            padding-top: 12px;
+            color: var(--text-light);
+        }
+        .fq-receipt-row.total .fq-receipt-val {
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--accent);
+        }
+        .fq-receipt-label { font-weight: 400; flex: 1; }
+        .fq-receipt-val { font-weight: 500; flex-shrink: 0; text-align: right; }
+        
+        .fq-receipt-row.sub .fq-receipt-val {
+            text-decoration: line-through;
+            color: #4a4a4a;
+        }
+
+        /* === NAVEGAÇÃO === */
+        .fq-nav {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            width: 100%;
+        }
+        .fq-btn-back {
+            flex: 1;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: #b8b8b8;
+            font-family: var(--font-sans);
+            font-weight: 400;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .fq-btn-back:hover {
+            border-color: #6B6B6B;
+            color: var(--text-light);
+        }
+        .fq-btn-next {
+            flex: 2;
+            padding: 14px;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: #0A0A0A;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .fq-btn-next:hover { background: var(--accent-hover); }
+        .fq-btn-next:disabled {
+            background: var(--border);
+            color: var(--text-dark);
+            cursor: not-allowed;
+        }
+
+        /* === LOADING E RESULTADO === */
+        .fq-loading { text-align: center; padding: 40px 0; }
+        .fq-heart-wrap {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px auto;
+            position: relative;
+        }
+        .fq-heart-svg { width: 100px; height: 100px; }
+        .fq-heart-path { fill: none; stroke: var(--border); stroke-width: 2; }
+        .fq-heart-fill {
+            fill: var(--primary);
+            opacity: 0;
+            animation: fqHP 2s ease-in-out infinite;
+        }
+        @keyframes fqHP {
+            0% { opacity: .15; transform: scale(.92); }
+            50% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: .15; transform: scale(.92); }
+        }
+        .fq-loading-text {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 24px;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        .fq-loading-sub {
+            font-size: 13px;
+            color: #4a4a4a;
+            letter-spacing: 1px;
+        }
+        
+        /* Book visual */
+        .fq-book-wrap {
+            margin: 0 auto 28px auto;
+            width: 180px;
+            position: relative;
+        }
+        .fq-book {
+            width: 180px;
+            height: 260px;
+            background: linear-gradient(135deg,#1a0a0e 0%,#2d0f18 40%,#1a0a0e 100%);
+            border-radius: 4px 12px 12px 4px;
+            box-shadow: 8px 4px 20px rgba(0,0,0,.6), -2px 0 6px rgba(139,32,53,.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        .fq-book::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--accent), #8B6914, var(--accent));
+        }
+        .fq-book::after {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px solid rgba(201,169,110,.15);
+            border-radius: 2px 8px 8px 2px;
+            pointer-events: none;
+        }
+        .fq-book-label {
+            font-size: 8px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+            opacity: .7;
+        }
+        .fq-book-title {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-style: italic;
+            font-size: 24px;
+            color: var(--text-light);
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        .fq-book-amp {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            color: var(--accent);
+            font-style: italic;
+            margin-bottom: 4px;
+        }
+        .fq-book-sub {
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(201,169,110,.5);
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        .fq-result-title {
+            font-family: var(--font-serif);
+            font-weight: 300;
+            font-size: 32px;
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        .fq-result-title em { color: var(--accent); font-weight: 700; font-style: italic; }
+        .fq-result-sub {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .fq-order-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: var(--primary);
+            color: var(--text-light);
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .25s;
+            box-shadow: 0 4px 24px rgba(139,32,53,.3);
+            margin-top: 16px;
+        }
+        .fq-order-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* === PROVA SOCIAL E FAQ === */
+        .fq-testimonials { margin-top: 36px; text-align: left; }
+        .fq-testimonials-header { font-size: 14px; color: #8a8a8a; margin-bottom: 16px; text-align: center; font-family: var(--font-sans); }
+        .fq-testimonials-header span { color: var(--accent); font-weight: 600; }
+        .fq-testimonial-wrap { overflow: hidden; position: relative; border-radius: 12px; }
+        .fq-testimonial-track { display: flex; transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1); }
+        .fq-testimonial-card { min-width: 100%; padding: 22px; background: var(--bg-card); border: 1px solid var(--border); box-sizing: border-box; }
+        .fq-testimonial-stars { color: var(--accent); font-size: 16px; margin-bottom: 12px; letter-spacing: 2px; }
+        .fq-testimonial-text { font-size: 14px; color: #b8b8b8; line-height: 1.65; margin-bottom: 18px; font-weight: 300; }
+        .fq-testimonial-text strong { color: var(--text-light); font-weight: 500; }
+        .fq-testimonial-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1f1f1f; padding-top: 14px; }
+        .fq-testimonial-author { font-size: 13px; font-style: italic; color: #6B6B6B; }
+        .fq-testimonial-badge { font-size: 10px; text-transform: uppercase; background: rgba(201,169,110,.08); color: var(--accent); padding: 4px 8px; border-radius: 4px; font-weight: 600; letter-spacing: 1px; }
+        .fq-testimonial-nav { display: flex; justify-content: center; gap: 10px; margin-top: 16px; }
+        .fq-testimonial-nav button { background: var(--bg-card); border: 1px solid var(--border); color: var(--accent); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+        .fq-testimonial-nav button:hover { background: #2a2a2a; color: var(--text-light); border-color: #3a3a3a; }
+
+        .fq-faq { margin-top: 40px; text-align: left; }
+        .fq-faq-title { font-family: var(--font-serif); font-size: 26px; text-align: center; margin-bottom: 24px; color: var(--text-light); }
+        .fq-faq-title em { color: var(--accent); font-style: italic; font-weight: 700; }
+        .fq-faq-item { border-bottom: 1px solid #1a1a1a; }
+        .fq-faq-q { padding: 18px 0; font-size: 14px; font-weight: 500; color: var(--text-light); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: color 0.2s; }
+        .fq-faq-q:hover { color: var(--accent); }
+        .fq-faq-q::after { content: '+'; font-size: 20px; color: var(--accent); transition: transform 0.3s; font-weight: 300; }
+        .fq-faq-item.open .fq-faq-q::after { transform: rotate(45deg); }
+        .fq-faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease; font-size: 13px; color: #8a8a8a; line-height: 1.7; font-weight: 300; }
+        .fq-faq-item.open .fq-faq-a { max-height: 300px; padding-bottom: 18px; }
+
+        @media(max-width: 749px) {
+            .fq-inner { padding: 30px 18px; padding-top: 40px; }
+            .fq-intro-title { font-size: 32px; }
+            .fq-step-title { font-size: 24px; }
+            .fq-row { grid-template-columns: 1fr; }
+            .fq-intensity { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="fq-overlay" id="fqOverlay">
+    <div class="fq-inner">
+        <div class="fq-card">
+
+            <!-- BARRA DE PROGRESSO -->
+            <div class="fq-progress" id="fqProgress" style="display:none;">
+                <div class="fq-progress-bar"></div><div class="fq-progress-bar"></div>
+                <div class="fq-progress-bar"></div><div class="fq-progress-bar"></div>
+                <div class="fq-progress-bar"></div><div class="fq-progress-bar"></div>
+                <div class="fq-progress-bar"></div><div class="fq-progress-bar"></div>
+                <div class="fq-progress-bar"></div><div class="fq-progress-bar"></div>
+                <div class="fq-progress-bar"></div><div class="fq-progress-bar"></div>
+            </div>
+            <div class="fq-step-count" id="fqStepCount"></div>
+
+            <!-- TELA 0: INTRO -->
+            <div class="fq-screen active" id="fq-screen-intro">
+                <div class="fq-intro">
+                    <div class="fq-intro-eyebrow">Dark Romance Sob Medida</div>
+                    <h1 class="fq-intro-title">
+                        Receba Seu Livro Personalizado
+                        <em>& Dê Vida Aos Seus Desejos</em>
+                    </h1>
+                    <p class="fq-intro-sub">
+                        Responda a algumas perguntas íntimas. Nós escreveremos um Dark Romance completo 
+                        onde <strong style="color:#F5F0EB;">você é a protagonista</strong>. Seu nome, sua fantasia, suas regras. 
+                        Entregue no seu e-mail em até 48 horas.
+                    </p>
+                    <button class="fq-intro-cta" onclick="fqGoTo(1)">Iniciar o Quiz</button>
+                    <div class="fq-intro-trust">
+                        <span class="fq-gold">4.9/5</span> de mais de 5.000 histórias entregues
+                    </div>
+                    <div class="fq-lock-badge">
+                        <svg width="14" height="16" viewBox="0 0 12 14" fill="none"><rect x="1" y="6" width="10" height="7" rx="1.5" stroke="#C9A96E" stroke-width="1.2" fill="rgba(201,169,110,.1)"/><path d="M3.5 6V4a2.5 2.5 0 0 1 5 0v2" stroke="#C9A96E" stroke-width="1.2" stroke-linecap="round"/></svg>
+                        <span>Suas respostas são 100% confidenciais e criptografadas</span>
+                    </div>
+                    <div class="fq-guarantee">
+                        <div class="fq-guarantee-headline">✦ Satisfação Garantida ✦</div>
+                        <div class="fq-guarantee-sub">Se você não amar a sua história, nós devolveremos seu dinheiro. Sem perguntas.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA 1: NOMES -->
+            <div class="fq-screen" id="fq-screen-1">
+                <div class="fq-step-title">Vamos começar pelos <em>nomes</em></div>
+                <div class="fq-step-sub">Você é a heroína. Ele é aquele que não sai da sua cabeça.</div>
+                <div class="fq-row">
+                    <div class="fq-field">
+                        <label class="fq-label">Seu Primeiro Nome *</label>
+                        <input type="text" class="fq-input" id="q-your-name" placeholder="Ex: Sarah">
+                    </div>
+                    <div class="fq-field">
+                        <label class="fq-label">O Nome Dele *</label>
+                        <input type="text" class="fq-input" id="q-his-name" placeholder="Ex: Damien">
+                    </div>
+                </div>
+                <div class="fq-nav">
+                    <button class="fq-btn-next" id="btn-next-1" disabled onclick="fqGoTo(2)">CONTINUAR</button>
+                </div>
+            </div>
+
+            <!-- TELA 2: IDADES -->
+            <div class="fq-screen" id="fq-screen-2">
+                <div class="fq-step-title">Qual a idade de <em>vocês?</em></div>
+                <div class="fq-step-sub">A idade molda a história. Um romance na faculdade queima diferente de um caso aos trinta.</div>
+                <div class="fq-row">
+                    <div class="fq-field">
+                        <label class="fq-label">Sua Idade *</label>
+                        <input type="number" class="fq-input" id="q-your-age" placeholder="Ex: 26">
+                    </div>
+                    <div class="fq-field">
+                        <label class="fq-label">Idade Dele *</label>
+                        <input type="number" class="fq-input" id="q-his-age" placeholder="Ex: 32">
+                    </div>
+                </div>
+                <div class="fq-nav">
+                    <button class="fq-btn-back" onclick="fqGoTo(1)">Voltar</button>
+                    <button class="fq-btn-next" id="btn-next-2" disabled onclick="fqGoTo(3)">CONTINUAR</button>
+                </div>
+            </div>
+
+            <!-- TELA 3: OLHOS -->
+            <div class="fq-screen" id="fq-screen-3">
+                <div class="fq-step-title">Os olhos que <em>te prendem</em></div>
+                <div class="fq-step-sub">A primeira coisa que você nota. A última coisa que você esquece antes de dormir.</div>
+                <div class="fq-row">
+                    <div class="fq-field">
+                        <label class="fq-label">A Cor dos Seus Olhos *</label>
+                        <select class="fq-select" id="q-your-eyes" onchange="toggleOther(this)">
+                            <option value="">Selecione...</option>
+                            <option>Castanhos</option><option>Azuis</option><option>Verdes</option>
+                            <option>Mel / Esverdeados</option><option>Cinzas</option>
+                            <option value="__other__">Outro...</option>
+                        </select>
+                        <input type="text" class="fq-input fq-other-input" placeholder="Digite a cor...">
+                    </div>
+                    <div class="fq-field">
+                        <label class="fq-label">A Cor dos Olhos Dele *</label>
+                        <select class="fq-select" id="q-his-eyes" onchange="toggleOther(this)">
+                            <option value="">Selecione...</option>
+                            <option>Castanhos Escuros</option><option>Azuis</option><option>Verdes</option>
+                            <option>Pretos</option><option>Cinzas</option>
+                            <option value="__other__">Outro...</option>
+                        </select>
+                        <input type="text" class="fq-input fq-other-input" placeholder="Digite a cor...">
+                    </div>
+                </div>
+                <div class="fq-nav">
+                    <button class="fq-btn-back" onclick="fqGoTo(2)">Voltar</button>
+                    <button class="fq-btn-next" id="btn-next-3" disabled onclick="fqGoTo(4)">CONTINUAR</button>
+                </div>
+            </div>
+
+            <!-- TELA 4: CABELO -->
+            <div class="fq-screen" id="fq-screen-4">
+                <div class="fq-step-title">Agora imagine <em>os cabelos</em></div>
+                <div class="fq-step-sub">O seu caindo pelos ombros. O dele, do tipo que você quer puxar.</div>
+                <div class="fq-row">
+                    <div class="fq-field">
+                        <label class="fq-label">A Cor do Seu Cabelo *</label>
+                        <select class="fq-select" id="q-your-hair" onchange="toggleOther(this)">
+                            <option value="">Selecione...</option>
+                            <option>Loiro</option><option>Moreno / Castanho</option><option>Preto</option>
+                            <option>Ruivo</option><option>Colorido</option>
+                            <option value="__other__">Outro...</option>
+                        </select>
+                        <input type="text" class="fq-input fq-other-input" placeholder="Digite a cor...">
+                    </div>
+                    <div class="fq-field">
+                        <label class="fq-label">A Cor do Cabelo Dele *</label>
+                        <select class="fq-select" id="q-his-hair" onchange="toggleOther(this)">
+                            <option value="">Selecione...</option>
+                            <option>Castanho Escuro</option><option>Preto</option><option>Loiro</option>
+                            <option>Castanho Claro</option><option>Ruivo</option><option>Grisalho</option>
+                            <option value="__other__">Outro...</option>
+                        </select>
+                        <input type="text" class="fq-input fq-other-input" placeholder="Digite a cor...">
+                    </div>
+                </div>
+                <div class="fq-nav">
+                    <button class="fq-btn-back" onclick="fqGoTo(3)">Voltar</button>
+                    <button class="fq-btn-next" id="btn-next-4" disabled onclick="fqGoTo(5)">CONTINUAR</button>
+                </div>
+            </div>
+
+            <!-- TELA 5: PORTE FÍSICO -->
+            <div class="fq-screen" id="fq-screen-5">
+                <div class="fq-step-title">Descreva <em>os corpos</em></div>
+                <div class="fq-step-sub">Cada detalhe importa. A história é sua, torne-a real.</div>
+                <div class="fq-row">
+                    <div class="fq-field">
+                        <label class="fq-label">Seu Tipo Físico *</label>
+                        <select class="fq-select" id="q-your-build" onchange="toggleOther(this)">
+                            <option value="">Selecione...</option>
+                            <option>Pequena e delicada</option><option>Magra</option><option>Atlética</option>
+                            <option>Com curvas</option><option>Plus-size</option>
+                            <option value="__other__">Outro...</option>
+                        </select>
+                        <input type="text" class="fq-input fq-other-input" placeholder="Descreva seu corpo...">
+                    </div>
+                    <div class="fq-field">
+                        <label class="fq-label">O Tipo Físico Dele *</label>
+                        <select class="fq-select" id="q-his-build" onchange="toggleOther(this)">
+                            <option value="">Selecione...</option>
+                            <option>Alto e musculoso</option><option>Magro e atlético</option>
+                            <option>Largo e imponente</option><option>Shape de lutador</option>
+                            <option value="__other__">Outro...</option>
+                        </select>
+                        <input type="text" class="fq-input fq-other-input" placeholder="Descreva o corpo dele...">
+                    </div>
+                </div>
+                <div class="fq-nav">
+                    <button class="fq-btn-back" onclick="fqGoTo(4)">Voltar</button>
+                    <button class="fq-btn-next" id="btn-next-5" disabled onclick="fqGoTo(6)">CONTINUAR</button>
+                </div>
+            </div>
+
+            <!-- TELA 6: CENÁRIO -->
+            <div class="fq-screen" id="fq-screen-6">
+                <div class="fq-step-title">Qual enredo <em>mais te excita?</em></div>
+                <div class="fq-step-sub">Feche os olhos. Qual fantasia faz seu coração bater mais forte?</div>
+                <div class="fq-field">
+                    <label class="fq-label">Escolha seu cenário *</label>
+                    <select class="fq-select" id="q-scenario" onchange="toggleOther(this)">
+                        <option value="">O que te dá borboletas no estômago...</option>
+                        <option>Enemies to Lovers (Inimigos a Amantes)</option>
+                        <option>Romance Proibido</option>
+                        <option>Romance da Máfia</option>
+                        <option>Chefe e Funcionária</option>
+                        <option>De Desconhecidos a Almas Gêmeas</option>
+                        <option>Irmão da Melhor Amiga</option>
+                        <option>Guarda-Costas / Protetor</option>
+                        <option>Bilionário Possessivo</option>
+                        <option>Proximidade Forçada (Apenas uma cama)</option>
+                        <option value="__other__">Outro - Tenho minha própria fantasia...</option>
+                    </select>
+                    <input type="text" class="fq-input fq-other-input" placeholder="Descreva sua fantasia com suas palavras...">
+                    <div class="fq-hint">Não existe resposta errada. Quanto mais ousado, melhor.</div>
+                </div>
+                <div class="fq-nav">
+                    <button class="fq-btn-back" onclick="fqGoTo(5)">Voltar</button>
+                    <button class="fq-btn-next" id="btn-next-6" disabled onclick="fqGoTo(7)">CONTINUAR</button>
+                </div>
+            </div>
+
+            <!-- TELA 7: AMBIENTAÇÃO -->
+            <div class="fq-screen" id="fq-screen-7">
+                <div class="fq-step-title">Onde tudo <em>começa?</em></div>
+                <div class="fq-step-sub">O lugar define o clima. Chuva na janela em Londres ou uma cobertura em Nova York? Onde você quer estar quando ele te olhar pela primeira vez?</div>
+                <div class="fq-field">
+                    <label class="fq-label">Escolha o ambiente *</label>
+                    <select class="fq-select" id="q-setting" onchange="toggleOther(this)">
+                        <option value="">Onde a história se passa...</option>
+                        <option>Cobertura luxuosa em Nova York</option>
+                        <option>Cidade costeira chuvosa</option>
+                        <option>Mansão isolada na Itália</option>
+                        <option>Londres chuvosa e nublada</option>
+                        <option>Chalé nas montanhas (Nevando)</option>
+                        <option>Ilha particular</option>
+                        <option>Campus de faculdade à noite</option>
+                        <option value="__other__">Outro - Tenho um lugar em mente...</option>
+                    </select>
+                    <input type="text" class="fq-input fq-other-input" placeholder="Descreva o lugar dos seus sonhos...">
+                </div>
+                <div class="fq-nav">
+                    <button class="fq-btn-back" onclick="fqGoTo(6)">Voltar</button>
+                    <button class="fq-btn-next" id="btn-next-7" disabled onclick="fqGoTo(8)">CONTINUAR</button>
+                </div>
+            </div>
+
+            <!-- TELA 8: INTENSIDADE -->
+            <div class="fq-screen" id="fq-screen-8">
+                <div class="fq-step-title">Até onde <em>devemos ir?</em></div>
+                <div class="fq-step-sub">Esta é a sua história. Seus limites. Você decide quão profunda a noite será.</div>
+                <div class="fq-field">
+                    <label class="fq-label">Nível de Intensidade (Hot) *</label>
+                    <div class="fq-intensity">
+                        <div class="fq-intensity-card" onclick="selectIntensity(this, 'Slow Burn')">
+                            <div class="fq-intensity-icon">🔥</div>
+                            <div class="fq-intensity-name">Romance Lento</div>
+                            <div class="fq-intensity-desc">Tensão e desejo contínuo</div>
+                        </div>
+                        <div class="fq-intensity-card" onclick="selectIntensity(this, 'Quente')">
+                            <div class="fq-intensity-icon">🔥🔥</div>
+                            <div class="fq-intensity-name">Quente</div>
+                            <div class="fq-intensity-desc">Apaixonado e sensual</div>
+                        </div>
+                        <div class="fq-intensity-card" onclick="selectIntensity(this, 'Explícito')">
+                            <div class="fq-intensity-icon">🌶️🌶️</div>
+                            <div class="fq-intensity-name">Explícito</div>
+                            <div class="fq-intensity-desc">Sem limites ou pudores</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fq-nav">
+                    <button class="fq-btn-back" onclick="fqGoTo(7)">Voltar</button>
+                    <button class="fq-btn-next" id="btn-next-8" disabled onclick="fqGoTo(9)">CONTINUAR</button>
+                </div>
+            </div>
+
+            <!-- TELA 9: TRAÇOS DELE -->
+            <div class="fq-screen" id="fq-screen-9">
+                <div class="fq-step-title">O que o torna <em>irresistível?</em></div>
+                <div class="fq-step-sub">A voz dele? As mãos? O jeito protetor? Nos conte o que faz seus joelhos fraquejarem e nós colocaremos em cada cena.</div>
+                <div class="fq-field">
+                    <label class="fq-label">O que você mais ama nele? *</label>
+                    <textarea class="fq-textarea" id="q-traits" placeholder="A voz rouca, o olhar intenso, o ciúme possessivo, o maxilar travado, como ele segura minha cintura... qualquer coisa que te deixe louca."></textarea>
+                    <div class="fq-hint">Seja específica, isso deixará a história muito mais real.</div>
+                </div>
+                <div class="fq-nav">
+                    <button class="fq-btn-back" onclick="fqGoTo(8)">Voltar</button>
+                    <button class="fq-btn-next" id="btn-next-9" disabled onclick="fqGoTo(10)">CONTINUAR</button>
+                </div>
+            </div>
+
+            <!-- TELA 10: EXTRAS -->
+            <div class="fq-screen" id="fq-screen-10">
+                <div class="fq-step-title">Os ingredientes <em>secretos</em></div>
+                <div class="fq-step-sub">Uma música. Uma lembrança. Um perfume. Os menores detalhes criam as cenas mais inesquecíveis. Aqui acontece a mágica.</div>
+                <div class="fq-field">
+                    <label class="fq-label">Algo mais que deseja incluir?</label>
+                    <textarea class="fq-textarea" id="q-extra" placeholder="Uma piada interna, uma marca de nascença, o cheiro de tabaco e menta, uma música específica tocando no fundo... abra seu coração."></textarea>
+                    <div class="fq-hint">Opcional, mas altamente recomendado. As melhores histórias vêm daqui.</div>
+                </div>
+                <div class="fq-nav">
+                    <button class="fq-btn-back" onclick="fqGoTo(9)">Voltar</button>
+                    <button class="fq-btn-next" onclick="fqGoTo(11)">CONTINUAR</button>
+                </div>
+            </div>
+
+            <!-- TELA 11: TAMANHO E PRECIFICAÇÃO BASE -->
+            <div class="fq-screen" id="fq-screen-11">
+                <div class="fq-step-title">Qual o <em>tamanho</em> da história?</div>
+                <div class="fq-step-sub">Um conto rápido ou um livro completo? Quanto maior, mais profunda e intensa fica a trama.</div>
+                
+                <div class="fq-upgrade-card included" id="len-short" onclick="selectLength('short')">
+                    <div class="fq-upgrade-check"></div>
+                    <div class="fq-upgrade-icon">30p</div>
+                    <div class="fq-upgrade-info">
+                        <div class="fq-upgrade-name">Conto (30 páginas)</div>
+                        <div class="fq-upgrade-desc">Intenso e direto ao ponto. Perfeito para uma noite.</div>
+                    </div>
+                    <div class="fq-upgrade-price free">Incluso</div>
+                </div>
+                <div class="fq-upgrade-card" id="len-novella" onclick="selectLength('novella')">
+                    <div class="fq-upgrade-check"></div>
+                    <div class="fq-upgrade-icon">50p</div>
+                    <div class="fq-upgrade-info">
+                        <div class="fq-upgrade-name">Novela (50 páginas)</div>
+                        <div class="fq-upgrade-desc">Mais desenvolvimento, mais detalhes quentes.</div>
+                    </div>
+                    <div class="fq-upgrade-price">+R$ 9,90</div>
+                </div>
+                <div class="fq-upgrade-card" id="len-novel" onclick="selectLength('novel')">
+                    <div class="fq-upgrade-check"></div>
+                    <div class="fq-upgrade-icon">70p</div>
+                    <div class="fq-upgrade-info">
+                        <div class="fq-upgrade-name">Livro Completo (70+ páginas)</div>
+                        <div class="fq-upgrade-desc">A experiência imersiva e completa. Desenvolvimento profundo.</div>
+                    </div>
+                    <div class="fq-upgrade-price">+R$ 14,90</div>
+                </div>
+
+                <div class="fq-receipt" id="receipt-11"></div>
+                
+                <div class="fq-nav">
+                    <button class="fq-btn-back" onclick="fqGoTo(10)">Voltar</button>
+                    <button class="fq-btn-next" onclick="fqGoTo(12)">CONTINUAR</button>
+                </div>
+            </div>
+
+            <!-- TELA 12: UPSELLS FINAIS -->
+            <div class="fq-screen" id="fq-screen-12">
+                <div class="fq-step-title">Torne a experiência <em>perfeita</em></div>
+                <div class="fq-step-sub">Adicionais exclusivos para elevar o nível da sua história.</div>
+                
+                <div class="fq-upgrade-card" id="addon-express" onclick="toggleAddon('express')">
+                    <div class="fq-upgrade-check"></div>
+                    <div class="fq-upgrade-icon">24h</div>
+                    <div class="fq-upgrade-info">
+                        <div class="fq-upgrade-name">Entrega Expressa VIP</div>
+                        <div class="fq-upgrade-desc">Passe na frente da fila e receba sua história em menos de 24 horas.</div>
+                    </div>
+                    <div class="fq-upgrade-price">+R$ 9,90</div>
+                </div>
+                <div class="fq-upgrade-card" id="addon-hispov" onclick="toggleAddon('hispov')">
+                    <div class="fq-upgrade-check"></div>
+                    <div class="fq-upgrade-icon">POV</div>
+                    <div class="fq-upgrade-info">
+                        <div class="fq-upgrade-name">Através dos Olhos Dele</div>
+                        <div class="fq-upgrade-desc">Um PDF bônus contando a melhor cena da história sob o ponto de vista masculino.</div>
+                    </div>
+                    <div class="fq-upgrade-price">+R$ 14,90</div>
+                </div>
+
+                <div class="fq-receipt" id="receipt-12"></div>
+                
+                <div class="fq-nav">
+                    <button class="fq-btn-back" onclick="fqGoTo(11)">Voltar</button>
+                    <button class="fq-btn-next" onclick="generateStory()" style="background:#8B2035; color:#F5F0EB;">CRIAR MINHA HISTÓRIA</button>
+                </div>
+            </div>
+
+            <!-- TELA DE CARREGAMENTO FALSO -->
+            <div class="fq-screen" id="fq-screen-loading">
+                <div class="fq-loading">
+                    <div class="fq-heart-wrap">
+                        <svg class="fq-heart-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path class="fq-heart-fill" d="M50 88 C25 65 5 50 5 32 C5 18 16 8 30 8 C38 8 46 13 50 20 C54 13 62 8 70 8 C84 8 95 18 95 32 C95 50 75 65 50 88Z"/>
+                            <path class="fq-heart-path" d="M50 88 C25 65 5 50 5 32 C5 18 16 8 30 8 C38 8 46 13 50 20 C54 13 62 8 70 8 C84 8 95 18 95 32 C95 50 75 65 50 88Z"/>
+                        </svg>
+                    </div>
+                    <div class="fq-loading-text">Analisando seus desejos...</div>
+                    <div class="fq-loading-sub">Preparando o rascunho da sua história<span id="loading-dots">...</span></div>
+                    <div id="fqLoadingUrgency" style="margin-top:20px; opacity:0; transition:opacity .8s; font-size:13px; color:#8B2035;">
+                        <span style="display:inline-block; width:6px; height:6px; background:#8B2035; border-radius:50%; margin-right:6px; animation:fqHP 1.5s infinite;"></span>
+                        Nossos escritores estão ocupados. Apenas 2 vagas restantes hoje.
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA FINAL E CHECKOUT -->
+            <div class="fq-screen" id="fq-screen-result">
+                <div class="fq-result">
+                    <div class="fq-result-title">Sua História Exclusiva<br><em>Estará Pronta em Breve</em></div>
+                    <div class="fq-result-sub">Um <strong>Dark Romance</strong> escrito inteiramente sobre você. Entregue como um lindo PDF formatado direto no seu e-mail.</div>
+                    
+                    <div class="fq-book-wrap">
+                        <div class="fq-book">
+                            <div class="fq-book-label">Sob Medida</div>
+                            <div class="fq-book-title" id="book-name-1">Você</div>
+                            <div class="fq-book-amp">&amp;</div>
+                            <div class="fq-book-title" id="book-name-2">Ele</div>
+                            <div class="fq-book-sub">Dark Romance Personalizado</div>
+                        </div>
+                    </div>
+
+                    <div class="fq-receipt" id="receipt-final"></div>
+
+                    <!-- BOTÃO DE CHECKOUT -->
+                    <button class="fq-order-btn" id="btn-checkout" onclick="submitAndCheckout()">
+                        CONFIRMAR PEDIDO - <span id="price-strike" style="text-decoration:line-through;opacity:.5;font-weight:400;font-size:13px;display:none;"></span> <span id="price-final">R$ 19,90</span>
+                    </button>
+                    
+                    <div style="font-size: 11px; color:#4a4a4a; margin-top:12px; text-align: center;">
+                        Pagamento 100% seguro via PIX ou Cartão.
+                    </div>
+
+                    <!-- GARANTIA FRENTE A CONVERSÃO -->
+                    <div class="fq-guarantee" style="margin-top: 24px;">
+                        <div class="fq-guarantee-headline">✦ Risco Zero ✦</div>
+                        <div class="fq-guarantee-sub">Se a sua história não te der frio na barriga, devolvemos 100% do seu dinheiro em até 7 dias. Sem letras miúdas.</div>
+                    </div>
+
+                    <!-- PROVA SOCIAL (CARROSSEL) -->
+                    <div class="fq-testimonials">
+                        <div class="fq-testimonials-header"><span>4.9/5</span> de mais de 5.000 histórias entregues</div>
+                        <div class="fq-testimonial-wrap">
+                            <div class="fq-testimonial-track" id="fqTestimonialTrack">
+                                <div class="fq-testimonial-card">
+                                    <div class="fq-testimonial-stars">★★★★★</div>
+                                    <div class="fq-testimonial-text">Fiquei chocada. Achei que seria algo genérico só com meu nome, mas não. Eles usaram o detalhe do café chuvoso que pedi. Li tudo às 2 da manhã e <strong>meu coração estava acelerado de verdade</strong>. Recomendo muito.</div>
+                                    <div class="fq-testimonial-footer">
+                                        <div class="fq-testimonial-author">— Sarah M., São Paulo</div>
+                                        <div class="fq-testimonial-badge">Compradora Verificada</div>
+                                    </div>
+                                </div>
+                                <div class="fq-testimonial-card">
+                                    <div class="fq-testimonial-stars">★★★★★</div>
+                                    <div class="fq-testimonial-text">Comprei de presente pra minha melhor amiga com a fantasia de 'Irmão da melhor amiga'. Ela me ligou chorando de rir dizendo que foi o melhor presente que já ganhou. <strong>Ela já leu umas 4 vezes só essa semana.</strong></div>
+                                    <div class="fq-testimonial-footer">
+                                        <div class="fq-testimonial-author">— Jessica T., Rio de Janeiro</div>
+                                        <div class="fq-testimonial-badge">Compradora Verificada</div>
+                                    </div>
+                                </div>
+                                <div class="fq-testimonial-card">
+                                    <div class="fq-testimonial-stars">★★★★★</div>
+                                    <div class="fq-testimonial-text">Achei que R$ 20 num PDF seria muito, mas <strong>vale muito mais que um livro normal do Kindle</strong>. A qualidade da escrita me pegou de surpresa, não parece robô. E a cena bônus do ponto de vista dele? Impecável.</div>
+                                    <div class="fq-testimonial-footer">
+                                        <div class="fq-testimonial-author">— Olivia K., Curitiba</div>
+                                        <div class="fq-testimonial-badge">Compradora Verificada</div>
+                                    </div>
+                                </div>
+                                <div class="fq-testimonial-card">
+                                    <div class="fq-testimonial-stars">★★★★★</div>
+                                    <div class="fq-testimonial-text">Estava com vergonha de colocar o nível 'explícito' 🌶️, mas o processo é super discreto. Ninguém sabe e não vem nada na fatura. <strong>Eles não economizaram nos detalhes, juro.</strong> Já tô pedindo o segundo com tema de Máfia.</div>
+                                    <div class="fq-testimonial-footer">
+                                        <div class="fq-testimonial-author">— Emma R., Belo Horizonte</div>
+                                        <div class="fq-testimonial-badge">Compradora Verificada</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fq-testimonial-nav">
+                            <button onclick="fqSlideT(-1)" aria-label="Anterior"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+                            <button onclick="fqSlideT(1)" aria-label="Próximo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+                        </div>
+                    </div>
+
+                    <!-- FAQ -->
+                    <div class="fq-faq">
+                        <div class="fq-faq-title">Dúvidas <em>Frequentes</em></div>
+                        
+                        <div class="fq-faq-item">
+                            <div class="fq-faq-q" onclick="toggleFAQ(this)">O que exatamente eu recebo?</div>
+                            <div class="fq-faq-a">Você recebe um livro (em formato de e-book PDF) escrito inteiramente sobre você. Nós transformamos o seu cenário dos sonhos e as suas características em um Dark Romance completo, formatado e pronto para ler no celular, Kindle ou Tablet.</div>
+                        </div>
+                        
+                        <div class="fq-faq-item">
+                            <div class="fq-faq-q" onclick="toggleFAQ(this)">Isso é gerado só por Inteligência Artificial?</div>
+                            <div class="fq-faq-a">Nós utilizamos IA avançada combinada com o toque humano minucioso dos nossos escritores e editores. Isso garante que a história flua, tenha tensão real e que os detalhes íntimos que você pediu não fiquem robóticos, mas sim com a qualidade de um best-seller.</div>
+                        </div>
+
+                        <div class="fq-faq-item">
+                            <div class="fq-faq-q" onclick="toggleFAQ(this)">Como a cobrança aparece na minha fatura?</div>
+                            <div class="fq-faq-a">De forma totalmente discreta. A cobrança virá no nome da plataforma de pagamento (ex: Kiwify Pagamentos), sem nenhuma menção a "Romance", "Dark" ou qualquer conteúdo do tipo. Seu segredo está a salvo.</div>
+                        </div>
+
+                        <div class="fq-faq-item">
+                            <div class="fq-faq-q" onclick="toggleFAQ(this)">E se eu não gostar da minha história?</div>
+                            <div class="fq-faq-a">É simples: você manda um e-mail para nossa equipe dentro de 7 dias e devolvemos 100% do seu dinheiro. Confiamos tanto na qualidade do que entregamos que assumimos todo o risco por você.</div>
+                        </div>
+                    </div>
+
+                    <!-- BOTÃO SECUNDÁRIO ABAIXO DO FAQ (Para não ter que subir a tela) -->
+                    <button class="fq-order-btn" style="margin-top: 24px; background: var(--accent); color: #000;" onclick="submitAndCheckout()">
+                        SIM, QUERO MINHA HISTÓRIA AGORA
+                    </button>
+
+                </div>
+            </div>
+
+        </div> <!-- /fq-card -->
+    </div> <!-- /fq-inner -->
+</div> <!-- /fq-overlay -->
+
+<script>
+    // CONFIGURAÇÕES DE PREÇOS (EM BRL)
+    const PRICES = {
+        base: 49.90, 
+        discount: 30.00, 
+        short: 0.00, 
+        novella: 9.90,
+        novel: 14.90,
+        express: 9.90,
+        hispov: 14.90
+    };
+
+    // ESTADO DO QUIZ
+    let currentStep = 'intro';
+    const totalSteps = 12;
+    let quizIntensity = '';
+    let selectedLength = 'short';
+    let addons = { express: false, hispov: false };
+    let hasDiscount = false;
+
+    function getVal(id) {
+        const el = document.getElementById(id);
+        if (!el) return '';
+        let val = el.value.trim();
+        if (val === '__other__') {
+            const other = el.parentElement.querySelector('.fq-other-input');
+            return other ? other.value.trim() : '';
+        }
+        return val;
+    }
+
+    function toggleOther(selectEl) {
+        const otherInput = selectEl.parentElement.querySelector('.fq-other-input');
+        if (!otherInput) return;
+        if (selectEl.value === '__other__') {
+            otherInput.style.display = 'block';
+            otherInput.addEventListener('input', validateCurrentStep);
+        } else {
+            otherInput.style.display = 'none';
+            otherInput.value = '';
+        }
+        validateCurrentStep();
+    }
+
+    function selectIntensity(el, val) {
+        quizIntensity = val;
+        document.querySelectorAll('.fq-intensity-card').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+        validateCurrentStep();
+    }
+
+    function selectLength(len) {
+        selectedLength = len;
+        ['short', 'novella', 'novel'].forEach(k => {
+            const el = document.getElementById('len-' + k);
+            if (el) {
+                el.classList.remove('selected', 'included');
+                if (k === len) el.classList.add(k === 'short' ? 'included' : 'selected');
+            }
+        });
+        updateReceipts();
+        validateCurrentStep();
+    }
+
+    function toggleAddon(addon) {
+        addons[addon] = !addons[addon];
+        const el = document.getElementById('addon-' + addon);
+        if (el) el.classList.toggle('selected', addons[addon]);
+        updateReceipts();
+        validateCurrentStep();
+    }
+
+    function validateCurrentStep() {
+        const s = currentStep;
+        if(s == 1) document.getElementById('btn-next-1').disabled = !(getVal('q-your-name') && getVal('q-his-name'));
+        if(s == 2) document.getElementById('btn-next-2').disabled = !(getVal('q-your-age') && getVal('q-his-age'));
+        if(s == 3) document.getElementById('btn-next-3').disabled = !(getVal('q-your-eyes') && getVal('q-his-eyes'));
+        if(s == 4) document.getElementById('btn-next-4').disabled = !(getVal('q-your-hair') && getVal('q-his-hair'));
+        if(s == 5) document.getElementById('btn-next-5').disabled = !(getVal('q-your-build') && getVal('q-his-build'));
+        if(s == 6) document.getElementById('btn-next-6').disabled = !(getVal('q-scenario'));
+        if(s == 7) document.getElementById('btn-next-7').disabled = !(getVal('q-setting'));
+        if(s == 8) document.getElementById('btn-next-8').disabled = !(quizIntensity !== '');
+        if(s == 9) document.getElementById('btn-next-9').disabled = !(getVal('q-traits'));
+    }
+
+    document.querySelectorAll('.fq-input, .fq-select, .fq-textarea').forEach(el => {
+        el.addEventListener('input', validateCurrentStep);
+        el.addEventListener('change', validateCurrentStep);
+    });
+
+    function fqGoTo(step) {
+        document.querySelectorAll('.fq-screen').forEach(s => s.classList.remove('active'));
+        const screen = document.getElementById('fq-screen-' + step);
+        if (screen) {
+            screen.classList.add('active');
+            screen.style.animation = 'none';
+            screen.offsetHeight; 
+            screen.style.animation = '';
+        }
+        currentStep = step;
+
+        const prog = document.getElementById('fqProgress');
+        const count = document.getElementById('fqStepCount');
+        if (step >= 1 && step <= totalSteps) {
+            prog.style.display = 'flex';
+            count.textContent = `PASSO ${step} DE ${totalSteps}`;
+            const bars = prog.querySelectorAll('.fq-progress-bar');
+            bars.forEach((b, i) => {
+                b.classList.remove('active', 'done');
+                if (i + 1 == step) b.classList.add('active');
+                else if (i + 1 < step) b.classList.add('done');
+            });
+        } else {
+            prog.style.display = 'none';
+            count.textContent = '';
+        }
+
+        document.getElementById('fqOverlay').scrollTop = 0;
+        validateCurrentStep();
+    }
+
+    function formatBRL(value) {
+        return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function calculateTotal() {
+        let subtotal = PRICES.base + PRICES[selectedLength];
+        let discountVal = hasDiscount ? PRICES.discount : 0;
+        let total = subtotal - discountVal;
+        
+        if (addons.express) total += PRICES.express;
+        if (addons.hispov) total += PRICES.hispov;
+        
+        return { subtotal, total, discountVal };
+    }
+
+    function buildReceiptHTML() {
+        const lengths = { short: 'Conto (30p)', novella: 'Novela (50p)', novel: 'Livro Completo (70+p)' };
+        const calc = calculateTotal();
+        
+        let html = `
+            <div class="fq-receipt-row sub">
+                <span class="fq-receipt-label">Subtotal - ${lengths[selectedLength]}</span>
+                <span class="fq-receipt-val">${formatBRL(calc.subtotal)}</span>
+            </div>
+            <div class="fq-receipt-row discount">
+                <span class="fq-receipt-label">Cupom Desconto <span style="font-size:11px;color:#2E7D32;">(Válido Hoje)</span></span>
+        `;
+        
+        if (hasDiscount) {
+            html += `<span class="fq-receipt-val">-${formatBRL(calc.discountVal)}</span></div>`;
+        } else {
+            html += `<button class="fq-receipt-activate" style="margin-left: 8px; padding: 4px 10px; background: #2E7D32; color: #FFF; border: none; border-radius: 4px; cursor: pointer; font-size: 10px; font-weight: bold; text-transform: uppercase;" onclick="activateDiscount()">ATIVAR CUPOM</button></div>`;
+        }
+
+        if (addons.express) {
+            html += `<div class="fq-receipt-row addon"><span class="fq-receipt-label">Entrega VIP (24h)</span><span class="fq-receipt-val">+${formatBRL(PRICES.express)}</span></div>`;
+        }
+        if (addons.hispov) {
+            html += `<div class="fq-receipt-row addon"><span class="fq-receipt-label">Ponto de Vista Dele (Bônus)</span><span class="fq-receipt-val">+${formatBRL(PRICES.hispov)}</span></div>`;
+        }
+
+        html += `<div class="fq-receipt-row total"><span class="fq-receipt-label">Total a Pagar</span><span class="fq-receipt-val" style="color:var(--accent); font-size:18px; font-weight:bold;">${formatBRL(calc.total)}</span></div>`;
+        return html;
+    }
+
+    function updateReceipts() {
+        const r11 = document.getElementById('receipt-11');
+        const r12 = document.getElementById('receipt-12');
+        const rf = document.getElementById('receipt-final');
+        
+        const html = buildReceiptHTML();
+        if(r11) r11.innerHTML = html;
+        if(r12) r12.innerHTML = html;
+        if(rf) rf.innerHTML = html;
+
+        const calc = calculateTotal();
+        const btnPrice = document.getElementById('price-final');
+        const btnStrike = document.getElementById('price-strike');
+
+        if(btnPrice) btnPrice.textContent = formatBRL(calc.total);
+        if(btnStrike) {
+            if(hasDiscount) {
+                btnStrike.style.display = 'inline';
+                btnStrike.textContent = formatBRL(calc.total + PRICES.discount);
+            } else {
+                btnStrike.style.display = 'none';
+            }
+        }
+    }
+
+    window.activateDiscount = function() {
+        hasDiscount = true;
+        updateReceipts();
+    }
+
+    function generateStory() {
+        fqGoTo('loading');
+        
+        setTimeout(() => {
+            document.getElementById('fqLoadingUrgency').style.opacity = '1';
+        }, 2000);
+
+        setTimeout(() => {
+            fqGoTo('result');
+            document.getElementById('book-name-1').textContent = getVal('q-your-name') || 'Você';
+            document.getElementById('book-name-2').textContent = getVal('q-his-name') || 'Ele';
+            updateReceipts();
+        }, 4500);
+    }
+
+    // ==========================================
+    // NOVA LÓGICA DE CHECKOUT (MAPEAMENTO DE LINKS)
+    // ==========================================
+    function submitAndCheckout() {
+        const btn = document.getElementById('btn-checkout');
+        btn.textContent = 'REDIRECIONANDO...';
+        btn.disabled = true;
+
+        const lengths = { short: 'Conto (30 páginas)', novella: 'Novela (50 páginas)', novel: 'Livro Completo (70+ páginas)' };
+        const calc = calculateTotal();
+
+        // 1. CAPTURAR OS DADOS
+        const quizData = {
+            customer_name: getVal('q-your-name'),
+            customer_age: getVal('q-your-age'),
+            customer_hair: getVal('q-your-hair'),
+            customer_eyes: getVal('q-your-eyes'),
+            customer_build: getVal('q-your-build'),
+            hero_name: getVal('q-his-name'),
+            hero_age: getVal('q-his-age'),
+            hero_hair: getVal('q-his-hair'),
+            hero_eyes: getVal('q-his-eyes'),
+            hero_build: getVal('q-his-build'),
+            scenario: getVal('q-scenario'),
+            setting: getVal('q-setting'),
+            intensity: quizIntensity,
+            what_she_loves: getVal('q-traits'),
+            extra_details: getVal('q-extra') || 'Nenhum',
+            package_length: lengths[selectedLength],
+            addon_express: addons.express ? 'Sim' : 'Não',
+            addon_hispov: addons.hispov ? 'Sim' : 'Não',
+            final_price_brl: calc.total
+        };
+
+        // 2. ENVIAR PARA O WEBHOOK (Para sua automação)
+        const WEBHOOK_URL = "https://hook.us1.make.com/SEU_WEBHOOK_AQUI"; 
+        
+        // Envia os dados em background sem travar a tela
+        fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(quizData)
+        }).catch(err => console.error("Erro no Webhook:", err));
+
+        // 3. MAPEAMENTO DE LINKS DE CHECKOUT
+        // O formato da chave é: "tamanho_express_hispov"
+        // Substitua os LINKS_X pelos links reais da sua Kiwify/Hotmart
+        const checkoutLinks = {
+            // Apenas Conto
+            "short_false_false": "https://pay.kiwify.com.br/LINK_1",
+            "short_true_false": "https://pay.kiwify.com.br/LINK_2", // + Express
+            "short_false_true": "https://pay.kiwify.com.br/LINK_3", // + POV
+            "short_true_true": "https://pay.kiwify.com.br/LINK_4", // + Express + POV
+            
+            // Novela
+            "novella_false_false": "https://pay.kiwify.com.br/LINK_5",
+            "novella_true_false": "https://pay.kiwify.com.br/LINK_6",
+            "novella_false_true": "https://pay.kiwify.com.br/LINK_7",
+            "novella_true_true": "https://pay.kiwify.com.br/LINK_8",
+            
+            // Livro Completo
+            "novel_false_false": "https://pay.kiwify.com.br/LINK_9",
+            "novel_true_false": "https://pay.kiwify.com.br/LINK_10",
+            "novel_false_true": "https://pay.kiwify.com.br/LINK_11",
+            "novel_true_true": "https://pay.kiwify.com.br/LINK_12",
+        };
+
+        // Monta a chave exata do que o cliente escolheu (ex: novella_true_false)
+        const choiceKey = `${selectedLength}_${addons.express}_${addons.hispov}`;
+        let finalCheckoutLink = checkoutLinks[choiceKey];
+
+        // Link padrão de segurança caso falte alguma configuração
+        if (!finalCheckoutLink) {
+            finalCheckoutLink = "https://pay.kiwify.com.br/LINK_PADRAO";
+        }
+
+        // Passa o nome para pré-preencher o checkout e a UTM de origem
+        const urlParams = new URLSearchParams({
+            name: quizData.customer_name,
+            src: "funil_quiz"
+        });
+
+        // Redireciona com um pequeno delay de 1.5s para simular processamento
+        setTimeout(() => {
+            window.location.href = `${finalCheckoutLink}?${urlParams.toString()}`;
+        }, 1500);
+    }
+
+    // === LÓGICA DO CARROSSEL DE DEPOIMENTOS E FAQ ===
+    let tIdx = 0;
+    const tTotal = 4; // Total de cards
+    
+    function fqSlideT(dir) {
+        tIdx = Math.max(0, Math.min(tTotal - 1, tIdx + dir));
+        const track = document.getElementById('fqTestimonialTrack');
+        if(track) track.style.transform = `translateX(-${tIdx * 100}%)`;
+    }
+    
+    // Suporte a Swipe no celular para o Carrossel
+    let tsX = 0;
+    let tdX = 0;
+    document.addEventListener('touchstart', e => {
+        if(e.target.closest('.fq-testimonial-wrap')) tsX = e.touches[0].clientX;
+    });
+    document.addEventListener('touchmove', e => {
+        if(e.target.closest('.fq-testimonial-wrap')) tdX = e.touches[0].clientX - tsX;
+    });
+    document.addEventListener('touchend', e => {
+        if(e.target.closest('.fq-testimonial-wrap')){
+            if(tdX > 50) fqSlideT(-1); // Deslizou para a direita
+            else if(tdX < -50) fqSlideT(1); // Deslizou para a esquerda
+            tdX = 0;
+        }
+    });
+
+    // Função de abrir e fechar as perguntas do FAQ
+    function toggleFAQ(el) {
+        el.parentElement.classList.toggle('open');
+    }
+
+    // Inicializar o primeiro form
+    updateReceipts();
+
+</script>
+
+</body>
+</html>
