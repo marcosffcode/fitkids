@@ -634,6 +634,32 @@
         .fq-faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease; font-size: 13px; color: #8a8a8a; line-height: 1.7; font-weight: 300; }
         .fq-faq-item.open .fq-faq-a { max-height: 300px; padding-bottom: 18px; }
 
+        /* === POPUP DE CUPOM === */
+        .fq-popup-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
+            z-index: 100000; display: none; align-items: center; justify-content: center;
+            padding: 20px; opacity: 0; transition: opacity 0.3s;
+        }
+        .fq-popup-overlay.active { opacity: 1; }
+        .fq-popup-card {
+            background: var(--bg-card); border: 1px solid var(--accent); border-radius: 12px;
+            padding: 30px 24px; text-align: center; max-width: 400px; width: 100%;
+            box-shadow: 0 10px 40px rgba(201, 169, 110, 0.15); transform: translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .fq-popup-overlay.active .fq-popup-card { transform: translateY(0); }
+        .fq-popup-icon { font-size: 40px; margin-bottom: 12px; }
+        .fq-popup-title { font-family: var(--font-serif); font-size: 26px; color: var(--text-light); margin-bottom: 8px; line-height: 1.2; }
+        .fq-popup-title em { color: var(--accent); font-style: italic; }
+        .fq-popup-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.5; }
+        .fq-popup-btn {
+            background: #22c55e; color: #000; font-family: var(--font-sans); font-weight: 700;
+            font-size: 15px; letter-spacing: 1px; text-transform: uppercase; padding: 16px; width: 100%;
+            border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+            transition: all 0.2s;
+        }
+        .fq-popup-btn:hover { background: #16a34a; transform: translateY(-2px); }
+
         @media(max-width: 749px) {
             .fq-inner { padding: 30px 18px; padding-top: 40px; }
             .fq-intro-title { font-size: 32px; }
@@ -642,6 +668,35 @@
             .fq-intensity { flex-direction: column; }
         }
     </style>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1015932644349701');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1015932644349701&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Utmify Code -->
+    <script
+      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+      data-utmify-prevent-xcod-sck
+      data-utmify-prevent-subids
+      async
+      defer
+    ></script>
+    <!-- End Utmify Code -->
+
 </head>
 <body>
 
@@ -1142,6 +1197,16 @@
     </div> <!-- /fq-inner -->
 </div> <!-- /fq-overlay -->
 
+<!-- POPUP CUPOM -->
+<div class="fq-popup-overlay" id="couponPopup">
+    <div class="fq-popup-card">
+        <div class="fq-popup-icon">🎁</div>
+        <div class="fq-popup-title">Você ganhou um <em>desconto!</em></div>
+        <div class="fq-popup-sub">Você tem 1 cupom de <strong>R$ 30,00</strong> disponível, mas ele <strong>só pode ser usado nesta tela</strong>. Deseja aplicar agora?</div>
+        <button class="fq-popup-btn" onclick="applyPopupDiscount()">ATIVAR MEU CUPOM</button>
+    </div>
+</div>
+
 <script>
     // CONFIGURAÇÕES DE PREÇOS (EM BRL)
     const PRICES = {
@@ -1261,6 +1326,18 @@
 
         document.getElementById('fqOverlay').scrollTop = 0;
         validateCurrentStep();
+
+        // LÓGICA DO POPUP NO PASSO 11
+        if (step == 11 && !hasDiscount && !window.popupShown) {
+            window.popupShown = true;
+            setTimeout(() => {
+                const popup = document.getElementById('couponPopup');
+                if(popup) {
+                    popup.style.display = 'flex';
+                    setTimeout(() => popup.classList.add('active'), 10);
+                }
+            }, 800); // Aparece 800ms após abrir a tela de preços
+        }
     }
 
     function formatBRL(value) {
@@ -1288,13 +1365,13 @@
                 <span class="fq-receipt-val">${formatBRL(calc.subtotal)}</span>
             </div>
             <div class="fq-receipt-row discount">
-                <span class="fq-receipt-label">Cupom Desconto <span style="font-size:11px;color:#2E7D32;">(Válido Hoje)</span></span>
+                <span class="fq-receipt-label">Cupom Desconto <span style="font-size:11px;color:#6B6B6B;">(Válido Hoje)</span></span>
         `;
         
         if (hasDiscount) {
             html += `<span class="fq-receipt-val">-${formatBRL(calc.discountVal)}</span></div>`;
         } else {
-            html += `<button class="fq-receipt-activate" style="margin-left: 8px; padding: 4px 10px; background: #2E7D32; color: #FFF; border: none; border-radius: 4px; cursor: pointer; font-size: 10px; font-weight: bold; text-transform: uppercase;" onclick="activateDiscount()">ATIVAR CUPOM</button></div>`;
+            html += `<span class="fq-receipt-val" style="color:#6B6B6B; font-weight:400;">Disponível</span></div>`;
         }
 
         if (addons.express) {
@@ -1333,9 +1410,14 @@
         }
     }
 
-    window.activateDiscount = function() {
+    window.applyPopupDiscount = function() {
         hasDiscount = true;
         updateReceipts();
+        const popup = document.getElementById('couponPopup');
+        if(popup) {
+            popup.classList.remove('active');
+            setTimeout(() => { popup.style.display = 'none'; }, 300);
+        }
     }
 
     function generateStory() {
@@ -1397,36 +1479,26 @@
             body: JSON.stringify(quizData)
         }).catch(err => console.error("Erro no Webhook:", err));
 
-        // 3. MAPEAMENTO DE LINKS DE CHECKOUT
-        // O formato da chave é: "tamanho_express_hispov"
-        // Substitua os LINKS_X pelos links reais da sua Kiwify/Hotmart
-        const checkoutLinks = {
-            // Apenas Conto
-            "short_false_false": "https://pay.kiwify.com.br/LINK_1",
-            "short_true_false": "https://pay.kiwify.com.br/LINK_2", // + Express
-            "short_false_true": "https://pay.kiwify.com.br/LINK_3", // + POV
-            "short_true_true": "https://pay.kiwify.com.br/LINK_4", // + Express + POV
-            
-            // Novela
-            "novella_false_false": "https://pay.kiwify.com.br/LINK_5",
-            "novella_true_false": "https://pay.kiwify.com.br/LINK_6",
-            "novella_false_true": "https://pay.kiwify.com.br/LINK_7",
-            "novella_true_true": "https://pay.kiwify.com.br/LINK_8",
-            
-            // Livro Completo
-            "novel_false_false": "https://pay.kiwify.com.br/LINK_9",
-            "novel_true_false": "https://pay.kiwify.com.br/LINK_10",
-            "novel_false_true": "https://pay.kiwify.com.br/LINK_11",
-            "novel_true_true": "https://pay.kiwify.com.br/LINK_12",
+        // 3. MAPEAMENTO DE LINKS DE CHECKOUT POR PREÇO FINAL
+        // Converte o total exato para string com 2 casas decimais (ex: "29.80")
+        const finalTotalStr = calc.total.toFixed(2);
+        
+        const checkoutLinksByPrice = {
+            "19.90": "https://checkout-dark1.afwopj.easypanel.host/",
+            "29.80": "https://checkout-dark2.afwopj.easypanel.host/",
+            "34.80": "https://checkout-dark3.afwopj.easypanel.host/",
+            "39.70": "https://checkout-dark3970.afwopj.easypanel.host/",
+            "44.70": "https://checkout-dark4.afwopj.easypanel.host/",
+            "49.70": "https://checkout-dark5.afwopj.easypanel.host/",
+            "54.60": "https://checkout-dark5460.afwopj.easypanel.host/",
+            "59.60": "https://checkout-dark5960.afwopj.easypanel.host/"
         };
 
-        // Monta a chave exata do que o cliente escolheu (ex: novella_true_false)
-        const choiceKey = `${selectedLength}_${addons.express}_${addons.hispov}`;
-        let finalCheckoutLink = checkoutLinks[choiceKey];
+        let finalCheckoutLink = checkoutLinksByPrice[finalTotalStr];
 
-        // Link padrão de segurança caso falte alguma configuração
+        // Link padrão de segurança caso ocorra alguma conta fora da tabela
         if (!finalCheckoutLink) {
-            finalCheckoutLink = "https://pay.kiwify.com.br/LINK_PADRAO";
+            finalCheckoutLink = "https://checkout-dark1.afwopj.easypanel.host/";
         }
 
         // Passa o nome para pré-preencher o checkout e a UTM de origem
