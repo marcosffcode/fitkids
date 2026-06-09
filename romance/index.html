@@ -1501,15 +1501,10 @@
             finalCheckoutLink = "https://checkout-dark1.afwopj.easypanel.host/";
         }
 
-        // Pega as UTMs da URL atual da página do quiz
 const currentParams = new URLSearchParams(window.location.search);
 const urlParams = new URLSearchParams();
-
-// Passa o nome
 urlParams.set('name', quizData.customer_name);
-
-// Repassa TODAS as UTMs que vieram do anúncio
-['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','sck','src'].forEach(k => {
+['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'sck', 'src'].forEach(k => {
     if (currentParams.get(k)) urlParams.set(k, currentParams.get(k));
 });
 
