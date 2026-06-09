@@ -1501,11 +1501,17 @@
             finalCheckoutLink = "https://checkout-dark1.afwopj.easypanel.host/";
         }
 
-        // Passa o nome para pré-preencher o checkout e a UTM de origem
-        const urlParams = new URLSearchParams({
-            name: quizData.customer_name,
-            src: "funil_quiz"
-        });
+        // Pega as UTMs da URL atual da página do quiz
+const currentParams = new URLSearchParams(window.location.search);
+const urlParams = new URLSearchParams();
+
+// Passa o nome
+urlParams.set('name', quizData.customer_name);
+
+// Repassa TODAS as UTMs que vieram do anúncio
+['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','sck','src'].forEach(k => {
+    if (currentParams.get(k)) urlParams.set(k, currentParams.get(k));
+});
 
         // Redireciona com um pequeno delay de 1.5s para simular processamento
         setTimeout(() => {
